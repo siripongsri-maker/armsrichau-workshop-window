@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({ rpc: vi.fn(), from: vi.fn(), send: vi.fn(), request: new Request("http://localhost/apply") }));
 vi.mock("@tanstack/react-start", () => ({
@@ -29,6 +29,11 @@ beforeEach(() => {
   mocks.send.mockResolvedValue({ sent: true });
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.useRealTimers();
+});
+
 describe("Submission safeguards", () => {
   it("uses cf-connecting-ip before XFF and requests five hourly slots", async () => {
     expect(await submitOpenCallApplication({ data: valid })).toEqual({ ok: true });
@@ -53,9 +58,54 @@ describe("Submission safeguards", () => {
     expect(await submitOpenCallApplication({ data: { ...valid, hp_extra: "autofill" } })).toEqual({ ok: true });
     expect(mocks.rpc).not.toHaveBeenCalled(); expect(mocks.from).not.toHaveBeenCalled();
   });
-  it("responds without waiting for owner email delivery", async () => {
+  it("waits for delivery when it completes within four seconds and clears the timer", async () => {
+    mocks.send.mockImplementation(() => new Promise((resolve) => setTimeout(() => resolve({ sent: true }), 1200)));
+    const finished = vi.fn();
+    const response = submitOpenCallApplication({ data: valid }).then(finished);
+    await vi.advanceTimersByTimeAsync(1199);
+    expect(finished).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(1);
+    await response;
+    expect(finished).toHaveBeenCalledWith({ ok: true });
+    expect(vi.getTimerCount()).toBe(0);
+  });
+  it("returns saved-application success at four seconds when email never settles and logs the timeout", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
     mocks.send.mockReturnValue(new Promise(() => {}));
+    const finished = vi.fn();
+    const response = submitOpenCallApplication({ data: valid }).then(finished);
+    await vi.advanceTimersByTimeAsync(3999);
+    expect(finished).not.toHaveBeenCalled();
+    expect(mocks.from).toHaveBeenCalledWith("open_call_applications");
+    await vi.advanceTimersByTimeAsync(1);
+    await response;
+    expect(finished).toHaveBeenCalledWith({ ok: true });
+    expect(log).toHaveBeenCalledWith("open call notification email timed out after 4000ms");
+    expect(vi.getTimerCount()).toBe(0);
+  });
+  it("logs delivery errors without failing a saved application", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const error = new Error("email unavailable");
+    mocks.send.mockRejectedValue(error);
     expect(await submitOpenCallApplication({ data: valid })).toEqual({ ok: true });
+    expect(log).toHaveBeenCalledWith("open call notification email failed", error);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+  it("catches a rejection even when email settles after the timeout", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const error = new Error("late email failure");
+    mocks.send.mockImplementation(() => new Promise((_, reject) => setTimeout(() => reject(error), 5000)));
+    const response = submitOpenCallApplication({ data: valid });
+    await vi.advanceTimersByTimeAsync(4000);
+    expect(await response).toEqual({ ok: true });
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(log).toHaveBeenCalledWith("open call notification email failed", error);
+  });
+  it("logs recipient suppression without failing a saved application", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    mocks.send.mockResolvedValue({ sent: false, reason: "recipient_suppressed" });
+    expect(await submitOpenCallApplication({ data: valid })).toEqual({ ok: true });
+    expect(log).toHaveBeenCalledWith("open call notification email not sent", "recipient_suppressed");
   });
   it("closes the server-rendered form after the deadline and rejects stale submissions", async () => {
     vi.setSystemTime(new Date("2026-11-08T17:00:00Z"));
