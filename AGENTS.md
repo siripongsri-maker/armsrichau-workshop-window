@@ -9,4 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- The /apply open-call form submits through `src/lib/open-call.functions.ts` (createServerFn), which validates with the shared zod schema in `src/lib/open-call-schema.ts`, enforces the deadline and an ad-hoc per-IP rate limit (5/hour via `open_call_rate_log`), and inserts with supabaseAdmin — the `open_call_applications` table has no anon/authenticated grants or policies, so all access goes through that function.
+- The public-only /apply flow uses its shared schema and server function with a service-role-only atomic rate-reservation RPC; no global browser auth middleware is needed, keeping public submissions independent of localStorage.
+- Application persistence precedes nonblocking owner email attempts; this stack has no verified waitUntil accessor, so storage is authoritative and the logged fallback is not a durable queue.

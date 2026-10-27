@@ -91,7 +91,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      open_call_take_slot: {
+        Args: { p_ip: string; p_limit?: number }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

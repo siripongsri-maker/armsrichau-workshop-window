@@ -8,6 +8,13 @@
       "when": 1793070877555,
       "tag": "0000_create_open_call_applications",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793072100677,
+      "tag": "0001_harden_open_call_rate_slots",
+      "breakpoints": true
     }
   ]
 }

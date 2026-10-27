@@ -1,13 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, useHydrated } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import portfolioCss from "../portfolio.css?url";
 import applyCss from "../apply.css?url";
-import { OPEN_CALL_DEADLINE, openCallSchema, type OpenCallInput } from "../lib/open-call-schema";
-import { submitOpenCallApplication } from "../lib/open-call.functions";
+import { openCallSchema, type OpenCallInput, type OpenCallData } from "../lib/open-call-schema";
+import { getOpenCallState, submitOpenCallApplication } from "../lib/open-call.functions";
 
 const TITLE = "Apply — November open call · Arm Srichau";
 const DESCRIPTION =
@@ -27,6 +27,7 @@ const FAVICON =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E2233'/%3E%3Ctext x='32' y='45' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='38' text-anchor='middle' fill='%23F7F9FB'%3EA%3C/text%3E%3C/svg%3E";
 
 export const Route = createFileRoute("/apply")({
+  loader: () => getOpenCallState(),
   head: () => ({
     meta: [
       { title: TITLE },
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/apply")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "icon", href: FAVICON },
@@ -55,31 +57,50 @@ export const Route = createFileRoute("/apply")({
 
 type Lang = "en" | "th";
 
-function FieldError({ message }: { message?: string | undefined }) {
+function errorText(message: string, lang: Lang) {
+  const limit = message.startsWith("too_long:") ? message.split(":")[1] : null;
+  if (limit) return lang === "en" ? `Use no more than ${limit} characters.` : `กรุณากรอกไม่เกิน ${limit} ตัวอักษร`;
+  const messages: Record<string, [string, string]> = {
+    required: ["This field is required.", "กรุณากรอกช่องนี้"],
+    email: ["Enter a valid email address.", "กรุณากรอกอีเมลที่ถูกต้อง"],
+    url: ["Enter a valid website or page link.", "กรุณากรอกลิงก์เว็บไซต์หรือเพจที่ถูกต้อง"],
+    choose_one: ["Choose one option.", "กรุณาเลือกหนึ่งตัวเลือก"],
+  };
+  const pair = messages[message];
+  return pair ? pair[lang === "en" ? 0 : 1] : (lang === "en" ? "This field is required." : "กรุณากรอกช่องนี้");
+}
+
+function FieldError({ message, name }: { message?: string | undefined; name: string }) {
   if (!message) return null;
-  return (
-    <p className="f-error" role="alert">
-      <span className="en">
-        {message === "url" ? "Please enter a valid link (starting with http:// or https://)." : "Please fill this in."}
-      </span>
-      <span className="th" lang="th">
-        {message === "url" ? "กรุณาใส่ลิงก์ที่ถูกต้อง (ขึ้นต้นด้วย http:// หรือ https://)" : "กรุณากรอกช่องนี้"}
-      </span>
-    </p>
-  );
+  return <p className="f-error" id={`error-${name}`}>
+    <span className="en">{errorText(message, "en")}</span>
+    <span className="th" lang="th">{errorText(message, "th")}</span>
+  </p>;
 }
 
 function ApplyPage() {
+  const initial = Route.useLoaderData();
+  const hydrated = useHydrated();
+  const outcomeRef = useRef<HTMLHeadingElement>(null);
+  const failureRef = useRef<HTMLParagraphElement>(null);
+  const [validationNotice, setValidationNotice] = useState("");
   const [lang, setLangState] = useState<Lang>("en");
-  const [status, setStatus] = useState<"form" | "done" | "closed">("form");
+  const [status, setStatus] = useState<"form" | "done" | "closed">(initial.closed ? "closed" : "form");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const submit = useServerFn(submitOpenCallApplication);
 
   useEffect(() => {
     const current = document.documentElement.dataset["lang"] === "th" ? "th" : "en";
     setLangState(current);
-    if (Date.now() > Date.parse(OPEN_CALL_DEADLINE)) setStatus("closed");
+
   }, []);
+
+  useEffect(() => {
+    if (status !== "form") outcomeRef.current?.focus();
+  }, [status]);
+  useEffect(() => {
+    if (submitError) failureRef.current?.focus();
+  }, [submitError]);
 
   function setLang(l: Lang) {
     setLangState(l);
@@ -96,8 +117,9 @@ function ApplyPage() {
     register,
     handleSubmit,
     watch,
+    setFocus,
     formState: { errors, isSubmitting },
-  } = useForm<OpenCallInput>({
+  } = useForm<OpenCallInput, unknown, OpenCallData>({
     resolver: zodResolver(openCallSchema),
     defaultValues: {
       organisation: "",
@@ -109,7 +131,7 @@ function ApplyPage() {
       email: "",
       channelDetail: "",
       language: "en",
-      website: "",
+      hp_extra: "",
     },
   });
 
@@ -117,8 +139,24 @@ function ApplyPage() {
   const problem = watch("problem") ?? "";
   const oneMonthChange = watch("oneMonthChange") ?? "";
 
-  async function onSubmit(values: OpenCallInput) {
+  function fieldA11y(name: keyof OpenCallInput, required = true) {
+    return {
+      "aria-invalid": !!errors[name],
+      "aria-describedby": errors[name] ? `error-${name}` : undefined,
+      "aria-required": required,
+    };
+  }
+
+  function onInvalid(invalid: typeof errors) {
+    const order: (keyof OpenCallInput)[] = ["organisation", "link", "about", "workType", "problem", "oneMonthChange", "contactName", "email", "channel", "channelDetail", "agreeTerms", "budget"];
+    const first = order.find((name) => invalid[name]);
+    setValidationNotice(`${Date.now()}`);
+    if (first) setFocus(first);
+  }
+
+  async function onSubmit(values: OpenCallData) {
     setSubmitError(null);
+    setValidationNotice("");
     try {
       const result = await submit({ data: { ...values, language: lang } });
       if (result.ok) {
@@ -140,11 +178,11 @@ function ApplyPage() {
     <div className="portfolio">
       <header className="apply-top">
         <div className="apply-top-inner wrap">
-          <Link to="/" hash="open-call" className="apply-back">
+          <a href="/#open-call" className="apply-back">
             <span aria-hidden="true">←</span>
             <span className="en">Back to portfolio</span>
             <span className="th" lang="th">กลับหน้าพอร์ต</span>
-          </Link>
+          </a>
           <div className="lang" role="group" aria-label="Language">
             <button type="button" aria-pressed={lang === "en"} onClick={() => setLang("en")}>
               EN
@@ -156,6 +194,11 @@ function ApplyPage() {
         </div>
       </header>
 
+      <div className="apply-live" aria-live="polite" aria-atomic="true">
+        {validationNotice && (lang === "en" ? "Please correct the marked fields." : "กรุณาแก้ไขช่องที่ระบุ")}
+        {submitError && (lang === "en" ? "Application not sent. Please check the message." : "ยังไม่ได้ส่งใบสมัคร กรุณาตรวจสอบข้อความ")}
+        {status !== "form" && (lang === "en" ? (status === "done" ? "Your application is in." : "Applications are closed.") : (status === "done" ? "ได้รับใบสมัครแล้ว" : "ปิดรับสมัครแล้ว"))}
+      </div>
       <main className="apply-main">
         <div className="wrap">
           <div className="apply-intro">
@@ -179,22 +222,22 @@ function ApplyPage() {
 
           {status === "closed" && (
             <div className="apply-closed">
-              <h2>
+              <h2 ref={outcomeRef} tabIndex={-1}>
                 <span className="en">Applications for November are closed.</span>
                 <span className="th" lang="th">ปิดรับสมัครรอบพฤศจิกายนแล้ว</span>
               </h2>
               <p>
-                <Link to="/" hash="open-call" className="link">
+                <a href="/#open-call" className="link">
                   <span className="en">Back to the portfolio</span>
                   <span className="th" lang="th">กลับไปหน้าพอร์ต</span>
-                </Link>
+                </a>
               </p>
             </div>
           )}
 
           {status === "done" && (
             <div className="apply-done">
-              <h2>
+              <h2 ref={outcomeRef} tabIndex={-1}>
                 <span className="en">Thank you. Your application is in.</span>
                 <span className="th" lang="th">ขอบคุณที่สมัครเข้ามา</span>
               </h2>
@@ -203,16 +246,16 @@ function ApplyPage() {
                 <span className="th" lang="th">จะติดต่อกลับ 3 องค์กรที่ได้รับเลือกภายใน 15 พฤศจิกายน</span>
               </p>
               <p>
-                <Link to="/" hash="open-call" className="link">
+                <a href="/#open-call" className="link">
                   <span className="en">Back to the portfolio</span>
                   <span className="th" lang="th">กลับไปหน้าพอร์ต</span>
-                </Link>
+                </a>
               </p>
             </div>
           )}
 
           {status === "form" && (
-            <form className="apply-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form className="apply-form" method="post" onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
               {/* 1. Organisation */}
               <div className="f-field">
                 <label className="f-label" htmlFor="f-organisation">
@@ -224,10 +267,10 @@ function ApplyPage() {
                   id="f-organisation"
                   className="f-input"
                   type="text"
-                  aria-invalid={!!errors.organisation}
+                  {...fieldA11y("organisation", true)}
                   {...register("organisation")}
                 />
-                <FieldError message={errors.organisation?.message} />
+                <FieldError name="organisation" message={errors.organisation?.message} />
               </div>
 
               <div className="f-field">
@@ -243,12 +286,12 @@ function ApplyPage() {
                 <input
                   id="f-link"
                   className="f-input"
-                  type="url"
+                  type="text" inputMode="url"
                   placeholder="https://"
-                  aria-invalid={!!errors.link}
+                  {...fieldA11y("link", false)}
                   {...register("link")}
                 />
-                <FieldError message={errors.link?.message} />
+                <FieldError name="link" message={errors.link?.message} />
               </div>
 
               {/* 2. About */}
@@ -262,11 +305,11 @@ function ApplyPage() {
                   id="f-about"
                   className="f-textarea"
                   maxLength={600}
-                  aria-invalid={!!errors.about}
+                  {...fieldA11y("about", true)}
                   {...register("about")}
                 />
                 <p className="f-count">{about.length}/600</p>
-                <FieldError message={errors.about?.message} />
+                <FieldError name="about" message={errors.about?.message} />
               </div>
 
               {/* 3. Piece of work */}
@@ -278,7 +321,7 @@ function ApplyPage() {
                 </legend>
                 <div className="f-options">
                   <label className="f-option">
-                    <input type="radio" value="one_page_website" {...register("workType")} />
+                    <input type="radio" value="one_page_website" {...fieldA11y("workType")} {...register("workType")} />
                     <span>
                       <span className="f-option-title">
                         <span className="en">One-page website</span>
@@ -291,7 +334,7 @@ function ApplyPage() {
                     </span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="marketing_plan" {...register("workType")} />
+                    <input type="radio" value="marketing_plan" {...fieldA11y("workType")} {...register("workType")} />
                     <span>
                       <span className="f-option-title">
                         <span className="en">30-day marketing plan on one page</span>
@@ -304,7 +347,7 @@ function ApplyPage() {
                     </span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="content_set" {...register("workType")} />
+                    <input type="radio" value="content_set" {...fieldA11y("workType")} {...register("workType")} />
                     <span>
                       <span className="f-option-title">
                         <span className="en">Content set: 4 posts with captions</span>
@@ -317,7 +360,7 @@ function ApplyPage() {
                     </span>
                   </label>
                 </div>
-                <FieldError message={errors.workType?.message} />
+                <FieldError name="workType" message={errors.workType?.message} />
               </fieldset>
 
               {/* 4. Problem */}
@@ -331,11 +374,11 @@ function ApplyPage() {
                   id="f-problem"
                   className="f-textarea"
                   maxLength={600}
-                  aria-invalid={!!errors.problem}
+                  {...fieldA11y("problem", true)}
                   {...register("problem")}
                 />
                 <p className="f-count">{problem.length}/600</p>
-                <FieldError message={errors.problem?.message} />
+                <FieldError name="problem" message={errors.problem?.message} />
               </div>
 
               {/* 5. One month */}
@@ -349,11 +392,11 @@ function ApplyPage() {
                   id="f-month"
                   className="f-textarea"
                   maxLength={600}
-                  aria-invalid={!!errors.oneMonthChange}
+                  {...fieldA11y("oneMonthChange", true)}
                   {...register("oneMonthChange")}
                 />
                 <p className="f-count">{oneMonthChange.length}/600</p>
-                <FieldError message={errors.oneMonthChange?.message} />
+                <FieldError name="oneMonthChange" message={errors.oneMonthChange?.message} />
               </div>
 
               {/* 6. Contact */}
@@ -367,10 +410,10 @@ function ApplyPage() {
                   id="f-contact-name"
                   className="f-input"
                   type="text"
-                  aria-invalid={!!errors.contactName}
+                  {...fieldA11y("contactName", true)}
                   {...register("contactName")}
                 />
-                <FieldError message={errors.contactName?.message} />
+                <FieldError name="contactName" message={errors.contactName?.message} />
               </div>
 
               <div className="f-row">
@@ -384,10 +427,10 @@ function ApplyPage() {
                     id="f-email"
                     className="f-input"
                     type="email"
-                    aria-invalid={!!errors.email}
+                    {...fieldA11y("email", true)}
                     {...register("email")}
                   />
-                  <FieldError message={errors.email?.message} />
+                  <FieldError name="email" message={errors.email?.message} />
                 </div>
                 <div className="f-field">
                   <label className="f-label" htmlFor="f-channel">
@@ -395,19 +438,19 @@ function ApplyPage() {
                     <span className="th" lang="th">ช่องทางที่สะดวกที่สุด</span>
                     <span className="f-req" aria-hidden="true">*</span>
                   </label>
-                  <select id="f-channel" className="f-select" aria-invalid={!!errors.channel} {...register("channel")}>
+                  <select id="f-channel" className="f-select" {...fieldA11y("channel", true)} {...register("channel")}>
                     <option value="">—</option>
-                    <option value="email">Email</option>
+                    <option value="email">{lang === "en" ? "Email" : "อีเมล"}</option>
                     <option value="line">LINE</option>
                     <option value="phone">
-                      Phone<span className="th" lang="th"> / โทรศัพท์</span>
+                      {lang === "en" ? "Phone" : "โทรศัพท์"}
                     </option>
                     <option value="messenger">Facebook Messenger</option>
                     <option value="other">
-                      Other<span className="th" lang="th"> / อื่น ๆ</span>
+                      {lang === "en" ? "Other" : "อื่น ๆ"}
                     </option>
                   </select>
-                  <FieldError message={errors.channel?.message} />
+                  <FieldError name="channel" message={errors.channel?.message} />
                 </div>
               </div>
 
@@ -421,7 +464,8 @@ function ApplyPage() {
                     <span className="th" lang="th">ไม่บังคับ</span>
                   </span>
                 </label>
-                <input id="f-channel-detail" className="f-input" type="text" {...register("channelDetail")} />
+                <input id="f-channel-detail" className="f-input" type="text" {...fieldA11y("channelDetail", false)} {...register("channelDetail")} />
+                <FieldError name="channelDetail" message={errors.channelDetail?.message} />
               </div>
 
               {/* 7. Terms */}
@@ -432,28 +476,27 @@ function ApplyPage() {
                     and sharing your numbers after one month?
                   </span>
                   <span className="th" lang="th">
-                    ตกลงเงื่อนไข: ลงผลงานในพอร์ตพร้อมชื่อแบรนด์ เขียนรีวิวหนึ่งย่อหน้า และแชร์ตัวเลขหลังครบ 1 เดือน
-                    ไหม
+                    ยินยอมให้นำงานไปลงพอร์ตพร้อมชื่อแบรนด์ เขียนรีวิวสั้น ๆ หนึ่งย่อหน้า และแชร์ตัวเลขหลังใช้งาน 1 เดือนหรือไม่
                   </span>
                   <span className="f-req" aria-hidden="true">*</span>
                 </legend>
                 <div className="f-options" style={{ gridTemplateColumns: "1fr 1fr", display: "grid" }}>
                   <label className="f-option">
-                    <input type="radio" value="yes" {...register("agreeTerms")} />
+                    <input type="radio" value="yes" {...fieldA11y("agreeTerms")} {...register("agreeTerms")} />
                     <span className="f-option-title">
                       <span className="en">Yes</span>
                       <span className="th" lang="th">ตกลง</span>
                     </span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="no" {...register("agreeTerms")} />
+                    <input type="radio" value="no" {...fieldA11y("agreeTerms")} {...register("agreeTerms")} />
                     <span className="f-option-title">
                       <span className="en">No</span>
                       <span className="th" lang="th">ไม่ตกลง</span>
                     </span>
                   </label>
                 </div>
-                <FieldError message={errors.agreeTerms?.message} />
+                <FieldError name="agreeTerms" message={errors.agreeTerms?.message} />
               </fieldset>
 
               {/* 8. Budget */}
@@ -465,47 +508,49 @@ function ApplyPage() {
                 </legend>
                 <div className="f-options">
                   <label className="f-option">
-                    <input type="radio" value="0" {...register("budget")} />
-                    <span className="f-option-title">THB 0</span>
+                    <input type="radio" value="0" {...fieldA11y("budget")} {...register("budget")} />
+                    <span className="f-option-title"><span className="en">THB 0</span><span className="th" lang="th">ไม่เสียค่าใช้จ่าย 0 บาท</span></span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="up_to_2000" {...register("budget")} />
+                    <input type="radio" value="up_to_2000" {...fieldA11y("budget")} {...register("budget")} />
                     <span className="f-option-title">
-                      <span className="en">Up to 2,000</span>
-                      <span className="th" lang="th">ไม่เกิน 2,000</span>
+                      <span className="en">Up to THB 2,000</span>
+                      <span className="th" lang="th">ไม่เกิน 2,000 บาท</span>
                     </span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="2000_5000" {...register("budget")} />
-                    <span className="f-option-title">2,000–5,000</span>
+                    <input type="radio" value="2000_5000" {...fieldA11y("budget")} {...register("budget")} />
+                    <span className="f-option-title"><span className="en">THB 2,000–5,000</span><span className="th" lang="th">2,000–5,000 บาท</span></span>
                   </label>
                   <label className="f-option">
-                    <input type="radio" value="over_5000" {...register("budget")} />
+                    <input type="radio" value="over_5000" {...fieldA11y("budget")} {...register("budget")} />
                     <span className="f-option-title">
-                      <span className="en">Over 5,000</span>
-                      <span className="th" lang="th">มากกว่า 5,000</span>
+                      <span className="en">Over THB 5,000</span>
+                      <span className="th" lang="th">มากกว่า 5,000 บาท</span>
                     </span>
                   </label>
                 </div>
-                <FieldError message={errors.budget?.message} />
+                <FieldError name="budget" message={errors.budget?.message} />
               </fieldset>
 
               {/* Honeypot — invisible to people, bots fill it */}
               <div className="f-honeypot" aria-hidden="true">
-                <label htmlFor="f-website">Website</label>
-                <input id="f-website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+                <label htmlFor="f-hp-extra">Extra</label>
+                <input id="f-hp-extra" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" {...fieldA11y("hp_extra", false)} {...register("hp_extra")} />
+                <FieldError name="hp_extra" message={errors.hp_extra?.message} />
               </div>
 
               {submitError && (
-                <p className="apply-fail" role="alert">
+                <p className="apply-fail" ref={failureRef} tabIndex={-1}>
                   {submitError === "rate_limited" ? (
                     <>
                       <span className="en">
-                        Too many submissions from this connection. Please wait a while and try again.
+                        Too many applications right now. Please wait about an hour and try again, or email 
                       </span>
                       <span className="th" lang="th">
-                        มีการส่งจากเครือข่ายนี้บ่อยเกินไป รอสักครู่แล้วลองใหม่
+                        มีการส่งใบสมัครมากเกินไปในขณะนี้ กรุณารอประมาณ 1 ชั่วโมงแล้วลองใหม่ หรือส่งอีเมลไปที่ 
                       </span>
+                      <a href="mailto:srichausiripong@gmail.com">srichausiripong@gmail.com</a>
                     </>
                   ) : (
                     <>
@@ -521,7 +566,7 @@ function ApplyPage() {
               )}
 
               <div className="apply-submit">
-                <button className="btn btn-accent" type="submit" disabled={isSubmitting}>
+                <button className="btn btn-accent" type="submit" disabled={!hydrated || isSubmitting}>
                   {isSubmitting ? (
                     <>
                       <span className="en">Sending…</span>
@@ -535,8 +580,8 @@ function ApplyPage() {
                   )}
                 </button>
                 <p className="apply-privacy">
-                  <span className="en">Your answers are only used to choose the three organisations for this round.</span>
-                  <span className="th" lang="th">ข้อมูลนี้ใช้เพื่อคัดเลือก 3 องค์กรในรอบนี้เท่านั้น</span>
+                  <span className="en">Siripong Srichau (srichausiripong@gmail.com) collects your answers and contact details to choose the three organisations for this round and contact them. A technical IP log is kept for up to one hour to prevent spam. Applications that are not picked will be deleted by 31 January 2027. You can ask to see or delete your data by emailing <a href="mailto:srichausiripong@gmail.com">srichausiripong@gmail.com</a>.</span>
+                  <span className="th" lang="th">Siripong Srichau (srichausiripong@gmail.com) เก็บคำตอบและข้อมูลติดต่อเพื่อคัดเลือก 3 องค์กรในรอบนี้และติดต่อกลับ โดยเก็บบันทึก IP ทางเทคนิคไว้ไม่เกิน 1 ชั่วโมงเพื่อป้องกันสแปม ใบสมัครที่ไม่ได้รับเลือกจะถูกลบภายใน 31 มกราคม 2570 สามารถขอดูหรือลบข้อมูลได้โดยส่งอีเมลไปที่ <a href="mailto:srichausiripong@gmail.com">srichausiripong@gmail.com</a></span>
                 </p>
               </div>
             </form>
