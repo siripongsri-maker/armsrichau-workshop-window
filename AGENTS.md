@@ -10,4 +10,4 @@
 <!-- LOVABLE:END -->
 
 - The public-only /apply flow uses its shared schema and server function with a service-role-only atomic rate-reservation RPC; no global browser auth middleware is needed, keeping public submissions independent of localStorage.
-- Application persistence precedes nonblocking owner email attempts; this stack has no verified waitUntil accessor, so storage is authoritative and the logged fallback is not a durable queue.
+- Persist applications before attempting owner email; the installed TanStack server-function runtime exposes no supported waitUntil accessor, so await delivery with a four-second timeout and log failures without changing saved-application success. This bounds response latency without pretending the fallback is a durable queue.

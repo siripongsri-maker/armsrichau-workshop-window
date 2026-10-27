@@ -105,12 +105,12 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
       return { ok: false, reason: "error" };
     }
 
-    // No supported execution-context accessor exists in this stack. Use the
-    // requested fire-and-forget fallback: storage remains the source of truth.
-    // A worker shutdown may interrupt delivery; never claim durable queuing.
-    void (async () => {
+    // TanStack exposes no supported waitUntil accessor in this installed stack.
+    // Await delivery for at most four seconds after persistence; a timeout is
+    // logged, not a failed application or a claim of durable email queuing.
+    const notification = (async () => {
       const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
-      await sendTemplateEmail("open-call-notification", "srichausiripong@gmail.com", {
+      const result = await sendTemplateEmail("open-call-notification", "srichausiripong@gmail.com", {
         templateData: {
           organisation: data.organisation,
           link: data.link || undefined,
@@ -129,9 +129,27 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
         },
         idempotencyKey: `open-call-notification-${row.id}`,
       });
+      if (!result.sent) {
+        console.error("open call notification email not sent", result.reason);
+      }
     })().catch((emailError: unknown) => {
       console.error("open call notification email failed", emailError);
     });
+
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        notification,
+        new Promise<void>((resolve) => {
+          timeout = setTimeout(() => {
+            console.error("open call notification email timed out after 4000ms");
+            resolve();
+          }, 4000);
+        }),
+      ]);
+    } finally {
+      if (timeout !== undefined) clearTimeout(timeout);
+    }
 
     return { ok: true };
   });
