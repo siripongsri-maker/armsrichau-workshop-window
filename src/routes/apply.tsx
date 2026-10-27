@@ -55,7 +55,7 @@ export const Route = createFileRoute("/apply")({
 
 type Lang = "en" | "th";
 
-function FieldError({ message }: { message?: string }) {
+function FieldError({ message }: { message?: string | undefined }) {
   if (!message) return null;
   return (
     <p className="f-error" role="alert">
