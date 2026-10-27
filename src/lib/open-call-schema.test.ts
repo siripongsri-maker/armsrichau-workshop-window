@@ -32,4 +32,8 @@ describe("Open-call input rules", () => {
   it.each(["workType", "channel", "agreeTerms", "budget"])("requires a choice for %s", (name) => {
     expect(openCallSchema.safeParse({ ...valid, [name]: "" }).success).toBe(false);
   });
+
+  it.each(["concept_note", "consultancy"])("accepts the %s work type", (workType) => {
+    expect(openCallSchema.safeParse({ ...valid, workType }).success).toBe(true);
+  });
 });

@@ -360,6 +360,32 @@ function ApplyPage() {
                       </span>
                     </span>
                   </label>
+                  <label className="f-option">
+                    <input type="radio" value="concept_note" {...fieldA11y("workType")} {...register("workType")} />
+                    <span>
+                      <span className="f-option-title">
+                        <span className="en">Concept note or short proposal, up to 5 pages</span>
+                        <span className="th" lang="th">แนวคิดโครงการหรือข้อเสนอโครงการสั้น <span className="nw">ไม่เกิน 5 หน้า</span></span>
+                      </span>
+                      <span className="f-option-sub">
+                        <span className="en">usually about THB 15,000</span>
+                        <span className="th" lang="th">ปกติประมาณ 15,000 บาท</span>
+                      </span>
+                    </span>
+                  </label>
+                  <label className="f-option">
+                    <input type="radio" value="consultancy" {...fieldA11y("workType")} {...register("workType")} />
+                    <span>
+                      <span className="f-option-title">
+                        <span className="en">Consultancy: 2 online sessions of 90 minutes</span>
+                        <span className="th" lang="th">ที่ปรึกษา: ออนไลน์ 2 ครั้ง ครั้งละ 90 นาที</span>
+                      </span>
+                      <span className="f-option-sub">
+                        <span className="en">communication, digital or fundraising · usually about THB 6,000</span>
+                        <span className="th" lang="th">ด้านการสื่อสาร ดิจิทัล หรือการระดมทุน · <span className="nw">ปกติประมาณ 6,000 บาท</span></span>
+                      </span>
+                    </span>
+                  </label>
                 </div>
                 <FieldError name="workType" message={errors.workType?.message} />
               </fieldset>

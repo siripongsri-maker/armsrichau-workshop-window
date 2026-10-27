@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const OPEN_CALL_DEADLINE = "2026-11-08T23:59:59+07:00";
-export const WORK_TYPES = ["one_page_website", "marketing_plan", "content_set"] as const;
+export const WORK_TYPES = ["one_page_website", "marketing_plan", "content_set", "concept_note", "consultancy"] as const;
 export const CHANNELS = ["email", "line", "phone", "messenger", "other"] as const;
 export const BUDGETS = ["0", "up_to_2000", "2000_5000", "over_5000"] as const;
 

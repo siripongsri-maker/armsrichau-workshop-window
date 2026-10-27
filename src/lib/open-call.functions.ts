@@ -13,6 +13,8 @@ const WORK_TYPE_LABELS: Record<string, string> = {
   one_page_website: "One-page website (usually about THB 15,000)",
   marketing_plan: "30-day marketing plan on one page (usually about THB 10,000)",
   content_set: "Content set: 4 posts with captions (usually about THB 8,000)",
+  concept_note: "Concept note or short proposal, up to 5 pages (usually about THB 15,000)",
+  consultancy: "Consultancy: 2 online sessions of 90 minutes on communication, digital or fundraising (usually about THB 6,000)",
 };
 const CHANNEL_LABELS: Record<string, string> = {
   email: "Email",

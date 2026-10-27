@@ -155,6 +155,16 @@ export async function initPortfolio() {
   const call = document.getElementById('open-call');
   if (call) {
     if (Date.now() > Date.parse(call.dataset.deadline)) root.classList.add('call-closed');
+    // Days left until the deadline, in both languages (the CSS shows the active one).
+    const msLeft = Date.parse(call.dataset.deadline) - Date.now();
+    if (msLeft > 0) {
+      const days = Math.ceil(msLeft / 86400000);
+      const en = days <= 1 ? 'Last day · apply by 8 Nov' : `${days} days left · apply by 8 Nov`;
+      const th = days <= 1 ? 'วันสุดท้าย · สมัครภายใน 8 พ.ย.' : `เหลืออีก ${days} วัน · สมัครภายใน 8 พ.ย.`;
+      document.querySelectorAll('[data-days-left]').forEach((el) => {
+        el.innerHTML = `<span class="en">${en}</span><span class="th" lang="th">${th}</span>`;
+      });
+    }
     const form = call.dataset.form;
     if (form) {
       // When a form link is set on the section, Apply goes straight to it.
@@ -177,7 +187,7 @@ export async function initPortfolio() {
   /* ---------- Active section in nav ---------- */
   const navLinks = [...nav.querySelectorAll('.nav-links a')];
   // Which nav item each section belongs to, so the highlight never sticks on the wrong one.
-  const NAV_FOR = { work: '#work', made: '#work', campaigns: '#work', media: '#work', training: '#work', impact: '#impact', experience: '#experience', skills: '#experience', recognition: '#recognition', 'open-call': '#contact', contact: '#contact' };
+  const NAV_FOR = { work: '#work', made: '#work', campaigns: '#work', media: '#work', training: '#work', impact: '#impact', experience: '#experience', skills: '#experience', recognition: '#recognition', 'open-call': '#open-call', contact: '#contact' };
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
@@ -186,6 +196,8 @@ export async function initPortfolio() {
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   Object.keys(NAV_FOR).forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+  // Back at the top, no menu item is highlighted.
+  const hero = document.querySelector('.hero'); if (hero) io.observe(hero);
 
   /* ---------- Static fallback (reduced motion or no GSAP) ---------- */
   if (!motion) {

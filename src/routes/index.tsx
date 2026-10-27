@@ -109,6 +109,7 @@ function Index() {
             <a href="#impact"><span className="en">Impact</span><span className="th" lang="th">ผลลัพธ์</span></a>
             <a href="#experience"><span className="en">Experience</span><span className="th" lang="th">ประสบการณ์</span></a>
             <a href="#recognition"><span className="en">Recognition</span><span className="th" lang="th">เวทีและรางวัล</span></a>
+            <a className="nav-call call-open-only" href="#open-call"><span className="en">Open call</span><span className="th" lang="th">เปิดรับงาน</span></a>
             <a href="#contact"><span className="en">Contact</span><span className="th" lang="th">ติดต่อ</span></a>
           </nav>
           <div className="nav-tools">
@@ -130,6 +131,7 @@ function Index() {
           <a href="#impact"><span className="en">Impact</span><span className="th" lang="th">ผลลัพธ์</span></a>
           <a href="#experience"><span className="en">Experience</span><span className="th" lang="th">ประสบการณ์</span></a>
           <a href="#recognition"><span className="en">Recognition</span><span className="th" lang="th">เวทีและรางวัล</span></a>
+          <a className="nav-call call-open-only" href="#open-call"><span className="en">Open call</span><span className="th" lang="th">เปิดรับงาน</span></a>
           <a href="#contact"><span className="en">Contact</span><span className="th" lang="th">ติดต่อ</span></a>
         </nav>
       </header>
@@ -152,7 +154,16 @@ function Index() {
             <button className="btn btn-accent" type="button" data-request="cv">
               <span className="en">Request CV</span><span className="th" lang="th">ขอดู CV</span>
             </button>
-            <a className="call-pill" href="#open-call"><b className="en">November open call</b><b className="th" lang="th">เปิดรับงานเดือนพฤศจิกายน</b> <span className="en">3 organisations, pay what you can</span> <span className="th" lang="th">3 องค์กร <span className="nw">จ่ายตามกำลัง →</span></span><span className="en" aria-hidden="true">→</span></a>
+            <div className="call-card">
+              <p className="call-card-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับงาน · พฤศจิกายน 2569</span></p>
+              <p className="call-card-h"><span className="en">Pay what you can, from <span className="nw">THB 0</span></span><span className="th" lang="th"><span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></p>
+              <p className="call-card-p"><span className="en">For 3 organisations: a website, marketing plan, content, proposal or consultancy.</span><span className="th" lang="th">สำหรับ 3 องค์กร: เว็บไซต์ แผนการตลาด <span className="nw">คอนเทนต์</span> ข้อเสนอโครงการ หรือที่ปรึกษา</span></p>
+              <div className="call-card-foot">
+                <button className="btn btn-accent" type="button" data-request="apply"><span className="en">Apply now</span><span className="th" lang="th">สมัครเลย</span></button>
+                <a className="link" href="#open-call"><span className="en">See details</span><span className="th" lang="th">ดูรายละเอียด</span></a>
+                <span className="call-days" data-days-left="" aria-live="polite"></span>
+              </div>
+            </div>
             <p className="status"><span className="status-dot" aria-hidden="true"></span><span className="en">Open to communication, digital and partnership roles</span><span className="th" lang="th">เปิดรับงานด้านสื่อสาร ดิจิทัล และพันธมิตร</span></p>
           </div>
         </div>
@@ -191,6 +202,77 @@ function Index() {
             <div><dt><span data-count="1000" data-suffix="+">1,000+</span></dt><dd><span className="en">teachers trained to use a new curriculum across 8 schools</span><span className="th" lang="th">ครูที่ผ่านการอบรมหลักสูตรใหม่ใน 8 โรงเรียน</span></dd></div>
             <div><dt><span data-count="12" data-suffix=" of 20">12 of 20</span></dt><dd><span className="en">SWING submissions accepted at AIDS 2026, Rio de Janeiro</span><span className="th" lang="th">ผลงานของ SWING ที่ผ่านการคัดเลือกในเวที AIDS 2026 <span className="nw">ริโอเดจาเนโร</span></span></dd></div>
           </dl>
+        </div>
+      </section>
+
+      {/* Open call */}
+      <section className="call" id="open-call" aria-labelledby="call-h" data-deadline="2026-11-08T23:59:59+07:00" data-form="/apply">
+        <div className="wrap">
+          <p className="call-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับ · พฤศจิกายน 2569</span></p>
+          <h2 className="h-section" id="call-h"><span className="en">Three organisations this November. Pay what you can, from THB 0.</span><span className="th" lang="th">พฤศจิกายนนี้ รับทำงานให้ 3 องค์กร <span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></h2>
+          <p className="lede en">Ten-plus years of communication work for social-sector organisations, from health campaigns like testBKK with APCOM to rights work and online media. This round is a chance to build work with new groups.</p>
+          <p className="lede th" lang="th">ทำงานสื่อสารให้องค์กรภาคสังคมมาสิบกว่าปี ทั้งแคมเปญสุขภาพ งานสิทธิ และสื่อออนไลน์ เคยทำแคมเปญ testBKK กับ APCOM ช่วงนี้อยากเก็บผลงานกับคนกลุ่มใหม่ ๆ บ้าง เลยเปิดรอบนี้ขึ้นมา</p>
+
+          <h3 className="h-sub"><span className="en">Pick one</span><span className="th" lang="th">เลือกได้หนึ่งอย่าง</span></h3>
+          <ul className="offers">
+            <li>
+              <p className="offer-n">01</p>
+              <h4><span className="en">One-page website</span><span className="th" lang="th">เว็บไซต์หน้าเดียว</span></h4>
+              <p className="offer-p"><span className="en">Usually about THB 15,000</span><span className="th" lang="th">ปกติราว 15,000 บาท</span></p>
+              <a className="link" href="#made"><span className="en">See sites I’ve built</span><span className="th" lang="th">ดูเว็บที่เคยทำ</span> <span aria-hidden="true">↑</span></a>
+            </li>
+            <li>
+              <p className="offer-n">02</p>
+              <h4><span className="en">30-day marketing plan, on one page</span><span className="th" lang="th">แผนการตลาด 30 วัน <span className="nw">สรุปจบในหน้าเดียว</span></span></h4>
+              <p className="offer-p"><span className="en">Usually about THB 10,000</span><span className="th" lang="th">ปกติราว 10,000 บาท</span></p>
+            </li>
+            <li>
+              <p className="offer-n">03</p>
+              <h4><span className="en">Content set: 4 posts with captions</span><span className="th" lang="th">ชุดคอนเทนต์ 4 โพสต์พร้อมแคปชัน</span></h4>
+              <p className="offer-p"><span className="en">Usually about THB 8,000</span><span className="th" lang="th">ปกติราว 8,000 บาท</span></p>
+            </li>
+            <li>
+              <p className="offer-n">04</p>
+              <h4><span className="en">Concept note or short proposal, up to 5 pages</span><span className="th" lang="th">แนวคิดโครงการหรือข้อเสนอโครงการสั้น <span className="nw">ไม่เกิน 5 หน้า</span></span></h4>
+              <p className="offer-p"><span className="en">Usually about THB 15,000</span><span className="th" lang="th">ปกติราว 15,000 บาท</span></p>
+              <a className="link" href="#experience"><span className="en">See funding I’ve raised</span><span className="th" lang="th">ดูทุนที่เคยระดมได้</span> <span aria-hidden="true">↓</span></a>
+            </li>
+            <li>
+              <p className="offer-n">05</p>
+              <h4><span className="en">Consultancy: 2 online sessions of 90 minutes</span><span className="th" lang="th">ที่ปรึกษา: ออนไลน์ 2 ครั้ง <span className="nw">ครั้งละ 90 นาที</span></span></h4>
+              <p className="offer-p"><span className="en">On communication, digital or fundraising · usually about THB 6,000</span><span className="th" lang="th">ด้านการสื่อสาร ดิจิทัล หรือการระดมทุน · ปกติราว 6,000 บาท</span></p>
+            </li>
+          </ul>
+
+          <div className="call-terms">
+            <div>
+              <h3 className="col-h"><span className="en">How it works</span><span className="th" lang="th">เงื่อนไขงาน</span></h3>
+              <ul className="ticks en"><li>Two rounds of revisions</li><li>Done in two weeks</li><li>Real costs such as domain, hosting or printing are paid by you</li></ul>
+              <ul className="ticks th" lang="th"><li>แก้ได้ 2 รอบ</li><li>เสร็จใน 2 สัปดาห์</li><li>ค่าใช้จ่ายจริงอย่างโดเมน โฮสติ้ง หรือค่าพิมพ์ เจ้าของงานออกเอง</li></ul>
+            </div>
+            <div>
+              <h3 className="col-h"><span className="en">What I ask in return</span><span className="th" lang="th">ที่ขอแลก</span></h3>
+              <ul className="ticks en"><li>Show the work in my portfolio with your brand name</li><li>A short review, one paragraph</li><li>Your numbers after one month: more messages, visits or sales</li></ul>
+              <ul className="ticks th" lang="th"><li>เอางานไปลงพอร์ตพร้อมชื่อแบรนด์</li><li>รีวิวสั้น ๆ หนึ่งย่อหน้า</li><li>ตัวเลขหลังใช้งาน 1 เดือน ว่ามีคนทักเพิ่ม เข้าเว็บเพิ่ม หรือขายได้เพิ่มแค่ไหน</li></ul>
+            </div>
+            <div>
+              <h3 className="col-h"><span className="en">A good fit for</span><span className="th" lang="th">เหมาะกับ</span></h3>
+              <p className="en">Community groups, small NGOs, social enterprises, and small shops and brands without an agency budget.</p>
+              <p className="th" lang="th">กลุ่มชุมชน NGO เล็ก ธุรกิจเพื่อสังคม หรือร้านและแบรนด์เล็กที่ยังไม่มีงบจ้างเอเจนซี่</p>
+            </div>
+          </div>
+
+          <ol className="call-steps">
+            <li><b>8 Nov</b><span className="en">Last day to apply</span><span className="th" lang="th">วันสุดท้ายของการสมัคร</span></li>
+            <li><b>15 Nov</b><span className="en">Three picked and contacted</span><span className="th" lang="th">เลือก 3 ที่และติดต่อกลับ</span></li>
+            <li><b><span className="en">2 weeks</span><span className="th" lang="th">2 สัปดาห์</span></b><span className="en">Work delivered</span><span className="th" lang="th">ส่งงาน</span></li>
+          </ol>
+
+          <div className="call-cta call-open-only">
+            <button className="btn btn-accent" type="button" data-request="apply" id="call-apply"><span className="en">Apply for a slot</span><span className="th" lang="th">สมัครรอบนี้</span></button>
+            <p className="muted"><span className="en">8 short questions. Takes about 5 minutes.</span><span className="th" lang="th">คำถามสั้น ๆ 8 ข้อ ใช้เวลาราว 5 นาที</span></p>
+          </div>
+          <p className="call-closed-msg call-closed-only"><span className="en">Applications for November are closed. Thank you to everyone who applied.</span><span className="th" lang="th">ปิดรับสมัครรอบพฤศจิกายนแล้ว ขอบคุณทุกองค์กรที่สมัครเข้ามา</span></p>
         </div>
       </section>
 
@@ -649,66 +731,6 @@ function Index() {
             <div><dt><span className="en">Languages</span><span className="th" lang="th">ภาษา</span></dt><dd><span className="en">Thai (native), English (professional)</span><span className="th" lang="th">ไทย (ภาษาแม่) อังกฤษ (ระดับทำงาน)</span></dd></div>
             <div><dt><span className="en">Also</span><span className="th" lang="th">งานอื่น</span></dt><dd><span className="en">Playwright; translated four full-length plays into Thai. Creator of ArmShares, a short-video channel on sexual health.</span><span className="th" lang="th">นักเขียนบทละคร แปลบทละครเต็มเรื่อง 4 เรื่องเป็นภาษาไทย และทำช่อง<span className="nw">วิดีโอ</span>สั้น ArmShares เรื่องสุขภาพทางเพศ</span></dd></div>
           </dl>
-        </div>
-      </section>
-
-      {/* Open call */}
-      <section className="call" id="open-call" aria-labelledby="call-h" data-deadline="2026-11-08T23:59:59+07:00" data-form="/apply">
-        <div className="wrap">
-          <p className="call-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับ · พฤศจิกายน 2569</span></p>
-          <h2 className="h-section" id="call-h"><span className="en">Three organisations this November. Pay what you can, from THB 0.</span><span className="th" lang="th">พฤศจิกายนนี้ รับทำงานให้ 3 องค์กร <span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></h2>
-          <p className="lede en">Ten-plus years of communication work for social-sector organisations, from health campaigns like testBKK with APCOM to rights work and online media. This round is a chance to build work with new groups.</p>
-          <p className="lede th" lang="th">ทำงานสื่อสารให้องค์กรภาคสังคมมาสิบกว่าปี ทั้งแคมเปญสุขภาพ งานสิทธิ และสื่อออนไลน์ เคยทำแคมเปญ testBKK กับ APCOM ช่วงนี้อยากเก็บผลงานกับคนกลุ่มใหม่ ๆ บ้าง เลยเปิดรอบนี้ขึ้นมา</p>
-
-          <h3 className="h-sub"><span className="en">Pick one</span><span className="th" lang="th">เลือกได้หนึ่งอย่าง</span></h3>
-          <ul className="offers">
-            <li>
-              <p className="offer-n">01</p>
-              <h4><span className="en">One-page website</span><span className="th" lang="th">เว็บไซต์หน้าเดียว</span></h4>
-              <p className="offer-p"><span className="en">Usually about THB 15,000</span><span className="th" lang="th">ปกติราว 15,000 บาท</span></p>
-              <a className="link" href="#made"><span className="en">See sites I’ve built</span><span className="th" lang="th">ดูเว็บที่เคยทำ</span> <span aria-hidden="true">↑</span></a>
-            </li>
-            <li>
-              <p className="offer-n">02</p>
-              <h4><span className="en">30-day marketing plan, on one page</span><span className="th" lang="th">แผนการตลาด 30 วัน <span className="nw">สรุปจบในหน้าเดียว</span></span></h4>
-              <p className="offer-p"><span className="en">Usually about THB 10,000</span><span className="th" lang="th">ปกติราว 10,000 บาท</span></p>
-            </li>
-            <li>
-              <p className="offer-n">03</p>
-              <h4><span className="en">Content set: 4 posts with captions</span><span className="th" lang="th">ชุดคอนเทนต์ 4 โพสต์พร้อมแคปชัน</span></h4>
-              <p className="offer-p"><span className="en">Usually about THB 8,000</span><span className="th" lang="th">ปกติราว 8,000 บาท</span></p>
-            </li>
-          </ul>
-
-          <div className="call-terms">
-            <div>
-              <h3 className="col-h"><span className="en">How it works</span><span className="th" lang="th">เงื่อนไขงาน</span></h3>
-              <ul className="ticks en"><li>Two rounds of revisions</li><li>Done in two weeks</li><li>Real costs such as domain, hosting or printing are paid by you</li></ul>
-              <ul className="ticks th" lang="th"><li>แก้ได้ 2 รอบ</li><li>เสร็จใน 2 สัปดาห์</li><li>ค่าใช้จ่ายจริงอย่างโดเมน โฮสติ้ง หรือค่าพิมพ์ เจ้าของงานออกเอง</li></ul>
-            </div>
-            <div>
-              <h3 className="col-h"><span className="en">What I ask in return</span><span className="th" lang="th">ที่ขอแลก</span></h3>
-              <ul className="ticks en"><li>Show the work in my portfolio with your brand name</li><li>A short review, one paragraph</li><li>Your numbers after one month: more messages, visits or sales</li></ul>
-              <ul className="ticks th" lang="th"><li>เอางานไปลงพอร์ตพร้อมชื่อแบรนด์</li><li>รีวิวสั้น ๆ หนึ่งย่อหน้า</li><li>ตัวเลขหลังใช้งาน 1 เดือน ว่ามีคนทักเพิ่ม เข้าเว็บเพิ่ม หรือขายได้เพิ่มแค่ไหน</li></ul>
-            </div>
-            <div>
-              <h3 className="col-h"><span className="en">A good fit for</span><span className="th" lang="th">เหมาะกับ</span></h3>
-              <p className="en">Community groups, small NGOs, social enterprises, and small shops and brands without an agency budget.</p>
-              <p className="th" lang="th">กลุ่มชุมชน NGO เล็ก ธุรกิจเพื่อสังคม หรือร้านและแบรนด์เล็กที่ยังไม่มีงบจ้างเอเจนซี่</p>
-            </div>
-          </div>
-
-          <ol className="call-steps">
-            <li><b>8 Nov</b><span className="en">Last day to apply</span><span className="th" lang="th">วันสุดท้ายของการสมัคร</span></li>
-            <li><b>15 Nov</b><span className="en">Three picked and contacted</span><span className="th" lang="th">เลือก 3 ที่และติดต่อกลับ</span></li>
-            <li><b><span className="en">2 weeks</span><span className="th" lang="th">2 สัปดาห์</span></b><span className="en">Work delivered</span><span className="th" lang="th">ส่งงาน</span></li>
-          </ol>
-
-          <div className="call-cta call-open-only">
-            <button className="btn btn-accent" type="button" data-request="apply" id="call-apply"><span className="en">Apply for a slot</span><span className="th" lang="th">สมัครรอบนี้</span></button>
-            <p className="muted"><span className="en">8 short questions. Takes about 5 minutes.</span><span className="th" lang="th">คำถามสั้น ๆ 8 ข้อ ใช้เวลาราว 5 นาที</span></p>
-          </div>
-          <p className="call-closed-msg call-closed-only"><span className="en">Applications for November are closed. Thank you to everyone who applied.</span><span className="th" lang="th">ปิดรับสมัครรอบพฤศจิกายนแล้ว ขอบคุณทุกองค์กรที่สมัครเข้ามา</span></p>
         </div>
       </section>
 
