@@ -76,14 +76,14 @@ function ApplyPage() {
   const submit = useServerFn(submitOpenCallApplication);
 
   useEffect(() => {
-    const current = document.documentElement.dataset.lang === "th" ? "th" : "en";
+    const current = document.documentElement.dataset["lang"] === "th" ? "th" : "en";
     setLangState(current);
     if (Date.now() > Date.parse(OPEN_CALL_DEADLINE)) setStatus("closed");
   }, []);
 
   function setLang(l: Lang) {
     setLangState(l);
-    document.documentElement.dataset.lang = l;
+    document.documentElement.dataset["lang"] = l;
     document.documentElement.lang = l;
     try {
       localStorage.setItem("lang", l);
