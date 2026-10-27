@@ -176,13 +176,16 @@ export async function initPortfolio() {
 
   /* ---------- Active section in nav ---------- */
   const navLinks = [...nav.querySelectorAll('.nav-links a')];
+  // Which nav item each section belongs to, so the highlight never sticks on the wrong one.
+  const NAV_FOR = { work: '#work', made: '#work', campaigns: '#work', media: '#work', training: '#work', impact: '#impact', experience: '#experience', skills: '#experience', recognition: '#recognition', 'open-call': '#contact', contact: '#contact' };
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
-      navLinks.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id));
+      const target = NAV_FOR[en.target.id];
+      navLinks.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === target));
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  navLinks.forEach((a) => { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); });
+  Object.keys(NAV_FOR).forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
 
   /* ---------- Static fallback (reduced motion or no GSAP) ---------- */
   if (!motion) {

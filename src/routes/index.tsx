@@ -13,7 +13,7 @@ const DESCRIPTION =
 const PRE_PAINT = `(function () {
   var d = document.documentElement;
   var lang = new URLSearchParams(location.search).get('lang');
-  if (lang !== 'en' && lang !== 'th') { try { lang = localStorage.getItem('lang'); } catch (e) {} }
+  if (lang === 'en' || lang === 'th') { try { localStorage.setItem('lang', lang); } catch (e) {} } else { try { lang = localStorage.getItem('lang'); } catch (e) {} }
   d.dataset.lang = lang === 'th' ? 'th' : 'en';
   if (lang === 'th') d.lang = 'th';
   d.classList.add('js');
@@ -101,7 +101,7 @@ function Index() {
               <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
               <button type="button" data-set-lang="th" aria-pressed="false" lang="th">ไทย</button>
             </div>
-            <button className="btn btn-ink btn-sm nav-cv" type="button" data-request="cv">
+            <button className="btn btn-accent btn-sm nav-cv" type="button" data-request="cv">
               <span className="en">Request CV</span><span className="th" lang="th">ขอ CV</span>
             </button>
             <button className="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
@@ -135,9 +135,6 @@ function Index() {
           <div className="hero-actions" data-hero="">
             <button className="btn btn-accent" type="button" data-request="cv">
               <span className="en">Request CV</span><span className="th" lang="th">ขอดู CV</span>
-            </button>
-            <button className="btn btn-line" type="button" data-request="collab">
-              <span className="en">Work together</span><span className="th" lang="th">ชวนทำงานด้วยกัน</span>
             </button>
             <a className="call-pill" href="#open-call"><b className="en">November open call</b><b className="th" lang="th">เปิดรับงานเดือนพฤศจิกายน</b> <span className="en">3 organisations, pay what you can</span> <span className="th" lang="th">3 องค์กร <span className="nw">จ่ายตามกำลัง →</span></span><span className="en" aria-hidden="true">→</span></a>
             <p className="status"><span className="status-dot" aria-hidden="true"></span><span className="en">Open to communication, digital and partnership roles</span><span className="th" lang="th">เปิดรับงานด้านสื่อสาร ดิจิทัล และพันธมิตร</span></p>
@@ -194,10 +191,16 @@ function Index() {
           </header>
 
           <article className="feature">
-            <a className="shot shot-lg reveal-img" href="https://testd.website" target="_blank" rel="noopener">
+            <div className="feature-media">
+              <a className="shot shot-lg reveal-img" href="https://testd.website" target="_blank" rel="noopener">
               <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>testd.website</span></span>
               <img src="img/shot-testd.webp" width="1440" height="900" loading="lazy" alt="testD home page: order a free HIV self-test kit" />
             </a>
+              <figure className="clinic reveal-img">
+                <img src="img/clinic-swing.webp" width="1400" height="1050" loading="lazy" alt="Inside a SWING clinic: a bright counselling room with the SWING logo on the wall" />
+                <figcaption><b className="en">Where the journey ends</b><b className="th" lang="th">ปลายทางของบริการ</b> <span className="en">A SWING clinic that people can book through testD.</span><span className="th" lang="th">คลินิก SWING ที่จองผ่าน testD ได้</span></figcaption>
+              </figure>
+            </div>
             <div className="feature-text">
               <h3 className="h-work">testD</h3>
               <p className="en">Free HIV self-testing for anyone in Thailand, from the first click to a clinic visit.</p>
@@ -223,11 +226,6 @@ function Index() {
               <a className="link" href="https://testd.website" target="_blank" rel="noopener">testd.website <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-
-          <figure className="clinic reveal-img">
-            <img src="img/clinic-swing.webp" width="1400" height="1050" loading="lazy" alt="Inside a SWING clinic: a bright counselling room with the SWING logo on the wall" />
-            <figcaption><b className="en">Where the journey ends</b><b className="th" lang="th">ปลายทางของบริการ</b> <span className="en">A SWING clinic that people can book through testD.</span><span className="th" lang="th">คลินิก SWING ที่จองผ่าน testD ได้</span></figcaption>
-          </figure>
 
           <div className="pair">
             <article className="card-plain">
@@ -263,8 +261,8 @@ function Index() {
             <p className="chapter-no">02</p>
             <div>
               <h2 className="h-section" id="made-h"><span className="en">Also built and made</span><span className="th" lang="th">งานอื่นที่สร้างและทำเอง</span></h2>
-              <p className="lede en">Websites, an event app and a video channel, made outside the SWING platforms.</p>
-              <p className="lede th" lang="th">เว็บไซต์ แอปสำหรับงานประชุม และช่องวิดีโอ ที่ทำนอกเหนือจากแพลตฟอร์มของ SWING</p>
+              <p className="lede en">A website and an event app, made outside the SWING platforms.</p>
+              <p className="lede th" lang="th">เว็บไซต์และแอปสำหรับงานประชุม ที่ทำนอกเหนือจากแพลตฟอร์มของ SWING</p>
             </div>
           </header>
           <div className="made-grid">
@@ -291,17 +289,6 @@ function Index() {
               <a className="link" href="https://cherryleeandco.com" target="_blank" rel="noopener">cherryleeandco.com <span aria-hidden="true">↗</span></a>
             </article>
           </div>
-          <article className="armshares">
-            <figure className="as-cover reveal-img"><img src="img/armshares-cover.webp" width="1640" height="720" loading="lazy" alt="ArmShares channel banner: sex, health and gay life, told without judgement" /></figure>
-            <div className="as-body">
-              <h3 className="h-work">ArmShares</h3>
-              <p className="en">My own short-video channel on sex, health and gay life, told with humour and no judgement. EP.1, “Dating app dictionary”, is out in Thai and English.</p>
-              <p className="th" lang="th">ช่องวิดีโอสั้นของตัวเอง เล่าเรื่องเพศ สุขภาพ และชีวิตเกย์ แบบสนุกและไม่ตัดสิน EP.1 “พจนานุกรมแอปหาคู่” มีทั้งเวอร์ชันไทยและอังกฤษ</p>
-              <p className="role"><b className="en">My part</b><b className="th" lang="th">บทบาท</b> <span className="en">Script, shoot, edit, motion graphics and brand kit</span><span className="th" lang="th">เขียนบท ถ่าย ตัดต่อ ทำโมชันกราฟิก และชุดแบรนด์</span></p>
-              <a className="link" href="https://www.tiktok.com/@armshares" target="_blank" rel="noopener">TikTok @armshares <span aria-hidden="true">↗</span></a>
-            </div>
-            <figure className="as-ep reveal-img"><img src="img/armshares-ep1.webp" width="720" height="1280" loading="lazy" alt="Cover of ArmShares EP.1, Dating app dictionary" /></figure>
-          </article>
         </div>
       </section>
 
@@ -323,15 +310,10 @@ function Index() {
             </a>
             <figure className="m-side reveal-img"><img src="img/shot-testmnl.webp" width="1000" height="625" loading="lazy" alt="testMNL.org home page, Manila" /><figcaption>testMNL · Manila</figcaption></figure>
             <figure className="m-side reveal-img"><img src="img/shot-testjkt.webp" width="1000" height="625" loading="lazy" alt="testJKT.org home page, Jakarta" /><figcaption>testJKT · Jakarta</figcaption></figure>
-            <figure className="m-side reveal-img"><img src="img/shot-testbom.webp" width="1000" height="625" loading="lazy" alt="testBOM.org home page, Mumbai" /><figcaption>testBOM · Mumbai</figcaption></figure>
           </div>
           <p className="cities"><span>testBKK</span><span>testJKT</span><span>testMNL</span><span>testSGN</span><span>testBOM</span><span>testVTE</span><span>test4UB</span></p>
-          <dl className="stat-row">
-            <div><dt>2x+</dt><dd><span className="en">longer visits to testBKK.org after a GA4-led redesign</span><span className="th" lang="th">เวลาบนเว็บ testBKK.org นานขึ้นกว่าเท่าตัว หลังปรับตามข้อมูล GA4</span></dd></div>
-            <div><dt>+25%</dt><dd><span className="en">HIV test bookings made through the site</span><span className="th" lang="th">การจองตรวจ<span className="nw">เอชไอวี</span>ผ่านเว็บไซต์</span></dd></div>
-            <div><dt>5.5M</dt><dd><span className="en">users reached with brand and influencer partners</span><span className="th" lang="th">ผู้ใช้ที่เข้าถึงร่วมกับแบรนด์และ<span className="nw">อินฟลูเอนเซอร์</span></span></dd></div>
-            <div><dt>THB 30M</dt><dd><span className="en">outreach budget managed with finance and programme teams</span><span className="th" lang="th">งบงานเข้าถึงที่บริหารร่วมกับทีมการเงินและทีมโครงการ</span></dd></div>
-          </dl>
+          <p className="inline-facts en">A redesign guided by GA4 data <b>more than doubled</b> time on testBKK.org and lifted HIV test bookings through the site by <b>25%</b>. Brand and influencer partners took reach past <b>5.5 million</b> people, on an outreach budget of <b>THB 30 million</b> managed with finance and programme teams.</p>
+          <p className="inline-facts th" lang="th">การปรับเว็บตามข้อมูล GA4 ทำให้คนอยู่บน testBKK.org <b>นานขึ้นกว่าเท่าตัว</b> และจองตรวจ<span className="nw">เอชไอวี</span>ผ่านเว็บเพิ่มขึ้น <b>25%</b> แคมเปญร่วมกับแบรนด์และ<span className="nw">อินฟลูเอนเซอร์</span>เข้าถึงคนกว่า <b>5.5 ล้านคน</b> ด้วยงบงานเข้าถึง <b>30 ล้านบาท</b> ที่บริหารร่วมกับทีมการเงินและทีมโครงการ</p>
           <p className="award-note"><span className="en">testBKK received the Ardhanareeswara Award for community media (2025).</span><span className="th" lang="th">testBKK ได้รับรางวัล<span className="nw">อรรธนารีศวร</span> ด้านสื่อชุมชน (2568)</span></p>
         </div>
       </section>
@@ -381,6 +363,17 @@ function Index() {
               </figcaption>
             </figure>
           </div>
+          <article className="armshares">
+            <figure className="as-cover reveal-img"><img src="img/armshares-cover.webp" width="1640" height="720" loading="lazy" alt="ArmShares channel banner: sex, health and gay life, told without judgement" /></figure>
+            <div className="as-body">
+              <h3 className="h-work">ArmShares</h3>
+              <p className="en">My own short-video channel on sex, health and gay life, told with humour and no judgement. EP.1, “Dating app dictionary”, is out in Thai and English.</p>
+              <p className="th" lang="th">ช่องวิดีโอสั้นของตัวเอง เล่าเรื่องเพศ สุขภาพ และชีวิตเกย์ แบบสนุกและไม่ตัดสิน EP.1 “พจนานุกรมแอปหาคู่” มีทั้งเวอร์ชันไทยและอังกฤษ</p>
+              <p className="role"><b className="en">My part</b><b className="th" lang="th">บทบาท</b> <span className="en">Script, shoot, edit, motion graphics and brand kit</span><span className="th" lang="th">เขียนบท ถ่าย ตัดต่อ ทำโมชันกราฟิก และชุดแบรนด์</span></p>
+              <a className="link" href="https://www.tiktok.com/@armshares" target="_blank" rel="noopener">TikTok @armshares <span aria-hidden="true">↗</span></a>
+            </div>
+            <figure className="as-ep reveal-img"><img src="img/armshares-ep1.webp" width="720" height="1280" loading="lazy" alt="Cover of ArmShares EP.1, Dating app dictionary" /></figure>
+          </article>
         </div>
       </section>
 
@@ -400,11 +393,8 @@ function Index() {
               <img src="img/bootcamp-group.webp" width="1567" height="1045" loading="lazy" alt="Group photo of bootcamp participants and facilitators in a hotel ballroom" />
             </figure>
             <div className="bc-side">
-              <dl className="mini-stats mini-stats-col">
-                <div><dt>77</dt><dd><span className="en">frontline staff from community organisations</span><span className="th" lang="th">เจ้าหน้าที่ภาคสนามจากองค์กรชุมชน</span></dd></div>
-                <div><dt>8</dt><dd><span className="en">small groups for hands-on practice</span><span className="th" lang="th">กลุ่มย่อยฝึกลงมือจริง</span></dd></div>
-                <div><dt>3 <span className="en">days</span><span className="th" lang="th">วัน</span></dt><dd><span className="en">of AI-assisted content production for health outreach</span><span className="th" lang="th">ผลิต<span className="nw">คอนเทนต์</span>สุขภาพด้วย AI</span></dd></div>
-              </dl>
+              <p className="inline-facts en"><b>77</b> frontline staff from community organisations worked in <b>8</b> small groups over <b>3 days</b> of AI-assisted content production for health outreach.</p>
+              <p className="inline-facts th" lang="th">เจ้าหน้าที่ภาคสนาม <b>77 คน</b> จากองค์กรชุมชน แบ่งเป็น <b>8 กลุ่ม</b> ฝึกผลิต<span className="nw">คอนเทนต์</span>สุขภาพด้วย AI ตลอด <b>3 วัน</b></p>
               <figure className="bc-portrait reveal-img"><img src="img/bootcamp-teaching.webp" width="900" height="1350" loading="lazy" alt="Arm holding a microphone, leading a session" /></figure>
             </div>
           </div>
@@ -422,63 +412,11 @@ function Index() {
         </div>
       </section>
 
-      {/* Funding, research, training */}
-      <section className="chapter chapter-alt" id="behind" aria-labelledby="behind-h">
-        <div className="wrap">
-          <header className="chapter-head">
-            <p className="chapter-no">06</p>
-            <div>
-              <h2 className="h-section" id="behind-h"><span className="en">The work behind the work</span><span className="th" lang="th">งานเบื้องหลังที่ทำให้งานเดินต่อ</span></h2>
-              <p className="lede en">The money, evidence and people skills that keep programmes running.</p>
-              <p className="lede th" lang="th">ทุน หลักฐาน และทักษะด้านคน ที่ทำให้โครงการไปต่อได้</p>
-            </div>
-          </header>
-          <div className="cols3">
-            <div className="col">
-              <h3 className="col-h"><span className="en">Funding</span><span className="th" lang="th">ระดมทุน</span></h3>
-              <dl className="facts">
-                <div><dt>USD 1M</dt><dd><span className="en">PEPFAR/EpiC grant for quality assurance in SWING clinics. Wrote the proposal.</span><span className="th" lang="th">ทุน PEPFAR/EpiC ด้านพัฒนาคุณภาพคลินิกของ SWING เขียนข้อเสนอเอง</span></dd></div>
-                <div><dt>USD 5,000</dt><dd><span className="en">Grant from APCOM, funded by UNAIDS. Wrote the proposal.</span><span className="th" lang="th">ทุนจาก APCOM สนับสนุนโดย UNAIDS เขียนข้อเสนอเอง</span></dd></div>
-                <div><dt>THB 380K</dt><dd><span className="en">CSR in-kind support from Maybelline and PepsiCo.</span><span className="th" lang="th">การสนับสนุน CSR จาก Maybelline และ PepsiCo</span></dd></div>
-                <div><dt>THB 96,963</dt><dd><span className="en">Raised from the public for SWING Fund on Taejai.com, and still open.</span><span className="th" lang="th">ระดมจากประชาชนให้ SWING Fund ผ่านเทใจดอทคอม และยังเปิดรับบริจาคอยู่</span></dd></div>
-              </dl>
-            </div>
-            <div className="col">
-              <h3 className="col-h"><span className="en">Research</span><span className="th" lang="th">งานวิจัย</span></h3>
-              <dl className="facts">
-                <div><dt>12 of 20</dt><dd><span className="en">SWING submissions accepted at AIDS 2026. Coordinated the 14-person team; first author on one poster.</span><span className="th" lang="th">ผลงาน SWING ที่ผ่านคัดเลือกใน AIDS 2026 ประสานทีม 14 คน และเป็นผู้เขียนหลักโปสเตอร์ 1 ชิ้น</span></dd></div>
-                <div><dt>2026</dt><dd><span className="en">Co-author, Harm Reduction Journal, with UCL, Mahidol, La Trobe and IHRI. Wellcome Trust-funded.</span><span className="th" lang="th">ผู้เขียนร่วมใน Harm Reduction Journal กับ UCL มหิดล La Trobe และ IHRI ทุนจาก Wellcome Trust</span></dd></div>
-                <div><dt>HR25</dt><dd><span className="en">Two abstracts at the Harm Reduction International Conference, Bogotá.</span><span className="th" lang="th">บทคัดย่อ 2 ชิ้นในเวที Harm Reduction International ที่โบโกตา</span></dd></div>
-              </dl>
-            </div>
-            <div className="col">
-              <h3 className="col-h"><span className="en">Training</span><span className="th" lang="th">การอบรม</span></h3>
-              <dl className="facts">
-                <div><dt>1,000+</dt><dd><span className="en">teachers trained to use a new curriculum across 8 schools.</span><span className="th" lang="th">ครูที่อบรมให้ใช้หลักสูตรใหม่ใน 8 โรงเรียน</span></dd></div>
-                <div><dt>+18%</dt><dd><span className="en">learner engagement and English scores after blended-learning labs.</span><span className="th" lang="th">ความมีส่วนร่วมและคะแนน<span className="nw">ภาษาอังกฤษ</span> หลังเริ่มห้องเรียนแบบผสมผสาน</span></dd></div>
-                <div><dt>10+ <span className="en">yrs</span><span className="th" lang="th">ปี</span></dt><dd><span className="en">of teaching and facilitation, from children’s classes to community workshops.</span><span className="th" lang="th">ของการสอนและ<span className="nw">กระบวนกร</span> ตั้งแต่คลาสเด็กถึง<span className="nw">เวิร์กช็อป</span>ชุมชน</span></dd></div>
-              </dl>
-            </div>
-          </div>
-          <a className="fund" href="https://taejai.com/th/project/ots-swing-fund" target="_blank" rel="noopener">
-            <figure className="fund-img reveal-img"><img src="img/taejai-swing-fund.webp" width="900" height="600" loading="lazy" alt="SWING Fund campaign cover: SWING outreach staff carrying supply bags" /></figure>
-            <div className="fund-body">
-              <p className="fund-k"><span className="en">Public fundraising</span><span className="th" lang="th">ระดมทุนสาธารณะ</span></p>
-              <h3 className="h-work"><span className="en">SWING Fund on Taejai</span><span className="th" lang="th">SWING Fund บนเทใจ</span></h3>
-              <p className="en">A fund for health and rights services for sex workers and LGBTQ+ people in Bangkok: outreach and community clinics, emergency support, and community leaders telling their own stories.</p>
-              <p className="th" lang="th">กองทุนสุขภาพและสิทธิสำหรับ<span className="nw">พนักงานบริการ</span>และคนหลากหลายทางเพศในกรุงเทพฯ ทั้งงานลงพื้นที่และคลินิกชุมชน กองทุนช่วยเหลือฉุกเฉิน และการให้ผู้นำชุมชนเล่าเรื่องของตัวเอง</p>
-              <p className="fund-n"><b>THB 96,963</b> <span className="en">raised · open until 31 Dec 2026</span><span className="th" lang="th">ยอดบริจาค · <span className="nw">เปิดถึง 31 ธ.ค. 2569</span></span></p>
-              <span className="link"><span className="en">See the campaign</span><span className="th" lang="th">ดูหน้าระดมทุน</span> <span aria-hidden="true">↗</span></span>
-            </div>
-          </a>
-        </div>
-      </section>
-
       {/* Experience */}
       <section className="chapter" id="experience" aria-labelledby="exp-h">
         <div className="wrap">
           <header className="chapter-head">
-            <p className="chapter-no">07</p>
+            <p className="chapter-no">06</p>
             <div>
               <h2 className="h-section" id="exp-h"><span className="en">Experience</span><span className="th" lang="th">ประสบการณ์ทำงาน</span></h2>
             </div>
@@ -525,8 +463,8 @@ function Index() {
               <div className="t-body">
                 <h3>Head of Academic</h3>
                 <p className="t-org">Learning Ability Promotion Center</p>
-                <p className="en">Prepared 1,000+ teachers for an updated curriculum and introduced blended-learning labs.</p>
-                <p className="th" lang="th">เตรียมครูกว่า 1,000 คนให้พร้อมใช้หลักสูตรใหม่ และริเริ่มห้องเรียนแบบผสมผสาน</p>
+                <p className="en">Prepared 1,000+ teachers for an updated curriculum and introduced blended-learning labs that raised engagement and English scores by 18%.</p>
+                <p className="th" lang="th">เตรียมครูกว่า 1,000 คนให้พร้อมใช้หลักสูตรใหม่ และริเริ่มห้องเรียนแบบผสมผสานที่ทำให้ความมีส่วนร่วมและคะแนน<span className="nw">ภาษาอังกฤษ</span>เพิ่มขึ้น 18%</p>
               </div>
             </li>
             <li>
@@ -538,13 +476,22 @@ function Index() {
                 <p className="th" lang="th">ขยายหลักสูตร<span className="nw">ภาษาอังกฤษ</span>ไป 12 <span className="nw">วิทยาเขต</span>ใหม่ (รายได้เพิ่ม 150%) ดูแลครู 40 คน และต่อมาดูแลผู้สอน 25 คน</p>
               </div>
             </li>
-            <li>
-              <p className="pub-meta">APCOM · <span className="en">reflection piece</span><span className="th" lang="th">บทความ</span></p>
-              <p className="pub-title">AIDS2024: Insights and implications for advancing global health</p>
-              <p className="pub-authors"><span className="en">What APCOM took from AIDS 2024 in Munich: person-centred care, PrEP for young people, AI in HIV care and harm reduction.</span><span className="th" lang="th">สิ่งที่ได้จาก AIDS 2024 ที่มิวนิก: การดูแลที่ยึดคนเป็นศูนย์กลาง PrEP สำหรับคนรุ่นใหม่ AI ในงานเอชไอวี และการลดอันตราย</span></p>
-              <a className="link" href="https://www.apcom.org/aids2024-insights-implications-advancing-global-health-siripong/" target="_blank" rel="noopener">apcom.org <span aria-hidden="true">↗</span></a>
-            </li>
           </ol>
+
+          <h3 className="h-sub"><span className="en">Funding raised</span><span className="th" lang="th">ทุนที่ระดมได้</span></h3>
+          <p className="inline-facts en">Wrote the proposals behind a <b>USD 1M</b> PEPFAR/EpiC grant and a <b>USD 5,000</b> APCOM grant funded by UNAIDS, brought in about <b>THB 380,000</b> of in-kind CSR support from Maybelline and PepsiCo, and opened public giving for SWING.</p>
+          <p className="inline-facts th" lang="th">เขียนข้อเสนอที่ได้ทุน PEPFAR/EpiC <b>1 ล้านดอลลาร์</b> และทุน APCOM จาก UNAIDS <b>5,000 ดอลลาร์</b> ได้การสนับสนุน CSR จาก Maybelline และ PepsiCo ราว <b>380,000 บาท</b> และเปิดช่องทางบริจาคสาธารณะให้ SWING</p>
+          <a className="fund" href="https://taejai.com/th/project/ots-swing-fund" target="_blank" rel="noopener">
+            <figure className="fund-img reveal-img"><img src="img/taejai-swing-fund.webp" width="900" height="600" loading="lazy" alt="SWING Fund campaign cover: SWING outreach staff carrying supply bags" /></figure>
+            <div className="fund-body">
+              <p className="fund-k"><span className="en">Public fundraising</span><span className="th" lang="th">ระดมทุนสาธารณะ</span></p>
+              <h3 className="h-work"><span className="en">SWING Fund on Taejai</span><span className="th" lang="th">SWING Fund บนเทใจ</span></h3>
+              <p className="en">A fund for health and rights services for sex workers and LGBTQ+ people in Bangkok: outreach and community clinics, emergency support, and community leaders telling their own stories.</p>
+              <p className="th" lang="th">กองทุนสุขภาพและสิทธิสำหรับ<span className="nw">พนักงานบริการ</span>และคนหลากหลายทางเพศในกรุงเทพฯ ทั้งงานลงพื้นที่และคลินิกชุมชน กองทุนช่วยเหลือฉุกเฉิน และการให้ผู้นำชุมชนเล่าเรื่องของตัวเอง</p>
+              <p className="fund-n"><b>THB 96,963</b> <span className="en">raised · open until 31 Dec 2026</span><span className="th" lang="th">ยอดบริจาค · <span className="nw">เปิดถึง 31 ธ.ค. 2569</span></span></p>
+              <span className="link"><span className="en">See the campaign</span><span className="th" lang="th">ดูหน้าระดมทุน</span> <span aria-hidden="true">↗</span></span>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -552,7 +499,7 @@ function Index() {
       <section className="chapter chapter-alt" id="recognition" aria-labelledby="rec-h">
         <div className="wrap">
           <header className="chapter-head">
-            <p className="chapter-no">08</p>
+            <p className="chapter-no">07</p>
             <div>
               <h2 className="h-section" id="rec-h"><span className="en">On the record</span><span className="th" lang="th">บนเวทีและในสื่อ</span></h2>
             </div>
@@ -637,7 +584,13 @@ function Index() {
             </li>
             <li>
               <p className="pub-meta">AIDS 2026, Rio de Janeiro · <span className="en">poster</span><span className="th" lang="th">โปสเตอร์</span></p>
-              <p className="pub-title"><span className="en">First author of one poster; communications lead for SWING’s 12 accepted contributions.</span><span className="th" lang="th">ผู้เขียนหลักโปสเตอร์ 1 ชิ้น และดูแลการสื่อสารให้ผลงาน SWING ที่ผ่านคัดเลือก 12 ชิ้น</span></p>
+              <p className="pub-title"><span className="en">First-author poster, presented in Rio de Janeiro.</span><span className="th" lang="th">ผู้เขียนหลักโปสเตอร์ นำเสนอที่ริโอเดจาเนโร</span></p>
+            </li>
+                <li>
+              <p className="pub-meta">APCOM · <span className="en">reflection piece</span><span className="th" lang="th">บทความ</span></p>
+              <p className="pub-title">AIDS2024: Insights and implications for advancing global health</p>
+              <p className="pub-authors"><span className="en">What APCOM took from AIDS 2024 in Munich: person-centred care, PrEP for young people, AI in HIV care and harm reduction.</span><span className="th" lang="th">สิ่งที่ได้จาก AIDS 2024 ที่มิวนิก: การดูแลที่ยึดคนเป็นศูนย์กลาง PrEP สำหรับคนรุ่นใหม่ AI ในงานเอชไอวี และการลดอันตราย</span></p>
+              <a className="link" href="https://www.apcom.org/aids2024-insights-implications-advancing-global-health-siripong/" target="_blank" rel="noopener">apcom.org <span aria-hidden="true">↗</span></a>
             </li>
           </ol>
         </div>
@@ -647,7 +600,7 @@ function Index() {
       <section className="chapter" id="skills" aria-labelledby="skills-h">
         <div className="wrap">
           <header className="chapter-head">
-            <p className="chapter-no">09</p>
+            <p className="chapter-no">08</p>
             <div>
               <h2 className="h-section" id="skills-h"><span className="en">What I bring to a team</span><span className="th" lang="th">สิ่งที่นำมาสู่ทีม</span></h2>
             </div>
