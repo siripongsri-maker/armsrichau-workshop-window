@@ -1,4 +1,4 @@
 - [x] Harden rate reservations and expire old IP logs.
 - [x] Improve /apply validation, accessibility, privacy, and deadline rendering.
-- [ ] Run focused tests and end-to-end submission; clean up test records.
+- [x] Run focused tests and end-to-end submission; clean up test records.
 - [ ] Confirm visitor-IP header on deployed updated code (blocked until publication).
