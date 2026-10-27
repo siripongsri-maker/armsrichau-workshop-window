@@ -1,0 +1,119 @@
+/* /apply page — builds on the portfolio tokens and classes in portfolio.css */
+
+.apply-top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(var(--paper-rgb), .92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.apply-top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--nav-h);
+}
+.apply-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-2);
+  transition: color .2s;
+}
+.apply-back:hover { color: var(--ink); }
+
+.apply-main { padding: clamp(48px, 7vw, 96px) 0 var(--space-section); }
+.apply-intro { max-width: 720px; }
+.apply-intro .h-section { font-size: clamp(30px, 4vw, 48px); max-width: 20ch; }
+
+.apply-form { margin-top: clamp(36px, 5vw, 56px); max-width: 720px; display: grid; gap: clamp(28px, 4vw, 40px); }
+
+.f-field { display: grid; gap: 10px; }
+.f-label { font-weight: 600; font-size: 16px; line-height: 1.5; }
+.f-label .f-req { color: var(--accent); margin-left: 4px; }
+.f-hint { font-size: 14px; color: var(--ink-3); }
+
+.f-input,
+.f-textarea,
+.f-select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+  transition: border-color .2s;
+}
+.f-input:focus,
+.f-textarea:focus,
+.f-select:focus { outline: none; border-color: var(--ink); }
+.f-textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.f-input[aria-invalid="true"],
+.f-textarea[aria-invalid="true"] { border-color: #B3261E; }
+
+.f-error { font-size: 14px; font-weight: 500; color: #B3261E; }
+.f-count { font-size: 13px; color: var(--ink-3); text-align: right; }
+
+.f-options { display: grid; gap: 10px; }
+.f-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .2s, background-color .2s;
+}
+.f-option:hover { border-color: var(--ink-3); }
+.f-option:has(input:checked) { border-color: var(--accent); background: rgba(10, 111, 106, .06); }
+.f-option input { margin-top: 4px; accent-color: var(--accent); width: 18px; height: 18px; flex: none; }
+.f-option-title { font-weight: 600; line-height: 1.45; }
+.f-option-sub { font-size: 14px; color: var(--ink-2); margin-top: 2px; }
+
+.f-row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) { .f-row { grid-template-columns: 1fr; } }
+
+.f-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.apply-submit { display: grid; gap: 14px; justify-items: start; }
+.apply-privacy { font-size: 14px; color: var(--ink-3); max-width: 48ch; }
+
+.apply-done,
+.apply-closed {
+  margin-top: clamp(36px, 5vw, 56px);
+  max-width: 720px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: clamp(24px, 4vw, 40px);
+  display: grid;
+  gap: 12px;
+}
+.apply-done h2,
+.apply-closed h2 { font: 600 clamp(22px, 2.4vw, 28px)/1.3 var(--f-display); letter-spacing: -.01em; }
+.apply-done p,
+.apply-closed p { color: var(--ink-2); }
+
+.apply-fail {
+  border: 1.5px solid #B3261E;
+  border-radius: var(--radius);
+  background: #FDF3F2;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #7A1B15;
+}
