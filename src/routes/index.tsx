@@ -4,6 +4,16 @@ import { useEffect } from "react";
 import portfolioCss from "../portfolio.css?url";
 import { initPortfolio } from "../lib/portfolio";
 
+// Dev only: the portfolio scripts rewrite parts of this page's DOM, so an
+// in-place hot update makes React crash (removeChild). Reload fully instead.
+if (import.meta.hot) {
+  import.meta.hot.on("vite:beforeUpdate", (payload) => {
+    if (payload.updates.some((u) => /routes\/index|lib\/portfolio/.test(u.path))) {
+      window.location.reload();
+    }
+  });
+}
+
 const TITLE = "Siripong “Arm” Srichau — Communication, Digital & Partnerships";
 const DESCRIPTION =
   "Siripong “Arm” Srichau: communication, digital innovation and partnerships for health and human rights. Campaigns, platforms, training and funding work from Bangkok.";
