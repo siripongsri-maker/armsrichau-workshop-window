@@ -3,7 +3,11 @@ import { getRequest } from "@tanstack/react-start/server";
 
 import { OPEN_CALL_DEADLINE, openCallSchema } from "./open-call-schema";
 
-const RATE_LIMIT_PER_HOUR = 5;
+let loggedDeployedIpHeaders = false;
+
+export const getOpenCallState = createServerFn({ method: "GET" }).handler(() => ({
+  closed: Date.now() > Date.parse(OPEN_CALL_DEADLINE),
+}));
 
 const WORK_TYPE_LABELS: Record<string, string> = {
   one_page_website: "One-page website (usually about THB 15,000)",
@@ -41,26 +45,40 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
     }
 
     // Honeypot: bots that fill the hidden field get a fake success, nothing stored.
-    if (data.website) return { ok: true };
+    if (data.hp_extra) return { ok: true };
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    // Ad-hoc per-IP rate limit: max 5 submissions per hour.
+    // Prefer the edge-provided visitor address; never use the first XFF entry.
     const req = getRequest();
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      req.headers.get("cf-connecting-ip") ||
-      "unknown";
-    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-    const { count } = await supabaseAdmin
-      .from("open_call_rate_log")
-      .select("id", { count: "exact", head: true })
-      .eq("ip", ip)
-      .gte("created_at", since);
-    if ((count ?? 0) >= RATE_LIMIT_PER_HOUR) {
+    const cfIp = req.headers.get("cf-connecting-ip")?.trim();
+    const forwarded = req.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim();
+    const ip = (cfIp || forwarded || "unknown").slice(0, 64);
+    // One narrow diagnostic per deployed worker isolate; never log cookies,
+    // authorization, or form answers. Check the first deployed request against
+    // the visitor's independently known public IP before declaring it verified.
+    if (!loggedDeployedIpHeaders && new URL(req.url).hostname === "armsrichau.com") {
+      loggedDeployedIpHeaders = true;
+      console.info("open call deployed IP check", {
+        cfConnectingIp: cfIp?.slice(0, 64),
+        forwardedLast: forwarded?.slice(0, 64),
+      });
+    }
+    let slot: boolean;
+    try {
+      const { data: accepted, error: slotError } = await supabaseAdmin.rpc("open_call_take_slot", { p_ip: ip, p_limit: 5 });
+      if (slotError || typeof accepted !== "boolean") {
+        console.error("open call rate reservation failed", slotError?.code ?? "invalid result");
+        return { ok: false, reason: "error" };
+      }
+      slot = accepted;
+    } catch {
+      console.error("open call rate reservation unavailable");
+      return { ok: false, reason: "error" };
+    }
+    if (!slot) {
       return { ok: false, reason: "rate_limited" };
     }
-    await supabaseAdmin.from("open_call_rate_log").insert({ ip });
 
     const { data: row, error } = await supabaseAdmin
       .from("open_call_applications")
@@ -82,14 +100,15 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
       .select("id")
       .single();
 
-    if (error) {
+    if (error || !row) {
       console.error("open_call_applications insert failed", error);
       return { ok: false, reason: "error" };
     }
 
-    // Notify the owner. The application is already stored, so an email
-    // failure must not fail the submission — log and still return ok.
-    try {
+    // No supported execution-context accessor exists in this stack. Use the
+    // requested fire-and-forget fallback: storage remains the source of truth.
+    // A worker shutdown may interrupt delivery; never claim durable queuing.
+    void (async () => {
       const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
       await sendTemplateEmail("open-call-notification", "srichausiripong@gmail.com", {
         templateData: {
@@ -110,9 +129,9 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
         },
         idempotencyKey: `open-call-notification-${row.id}`,
       });
-    } catch (emailError) {
+    })().catch((emailError: unknown) => {
       console.error("open call notification email failed", emailError);
-    }
+    });
 
     return { ok: true };
   });
