@@ -66,10 +66,11 @@ function errorText(message: string, lang: Lang) {
     url: ["Enter a valid website or page link.", "กรุณากรอกลิงก์เว็บไซต์หรือเพจที่ถูกต้อง"],
     choose_one: ["Choose one option.", "กรุณาเลือกหนึ่งตัวเลือก"],
   };
-  return (messages[message] ?? messages.required)[lang === "en" ? 0 : 1];
+  const pair = messages[message];
+  return pair ? pair[lang === "en" ? 0 : 1] : (lang === "en" ? "This field is required." : "กรุณากรอกช่องนี้");
 }
 
-function FieldError({ message, name }: { message?: string; name: string }) {
+function FieldError({ message, name }: { message?: string | undefined; name: string }) {
   if (!message) return null;
   return <p className="f-error" id={`error-${name}`}>
     <span className="en">{errorText(message, "en")}</span>
@@ -536,6 +537,7 @@ function ApplyPage() {
               <div className="f-honeypot" aria-hidden="true">
                 <label htmlFor="f-hp-extra">Extra</label>
                 <input id="f-hp-extra" type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" {...fieldA11y("hp_extra", false)} {...register("hp_extra")} />
+                <FieldError name="hp_extra" message={errors.hp_extra?.message} />
               </div>
 
               {submitError && (
