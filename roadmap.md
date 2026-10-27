@@ -2,3 +2,6 @@
 - [x] Improve /apply validation, accessibility, privacy, and deadline rendering.
 - [x] Run focused tests and end-to-end submission; clean up test records.
 - [ ] Confirm visitor-IP header on deployed updated code (blocked until publication).
+- [ ] Register owner notifications with verified waitUntil access or await them for at most four seconds.
+- [ ] Use the Thai collector name in the /apply privacy notice.
+- [ ] Run notification regression tests and verify the automatic build.
