@@ -11,7 +11,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // Server routes and server functions need non-VITE_ env vars (e.g.
 // SUPABASE_SERVICE_ROLE_KEY, LOVABLE_API_KEY) in process.env. Client code
 // still only receives VITE_* vars — these keys are never added to envDefine.
-const serverEnv = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
+const serverEnv = loadEnv(process.env["NODE_ENV"] ?? "development", process.cwd(), "");
 Object.assign(process.env, serverEnv);
 
 export default defineConfig({

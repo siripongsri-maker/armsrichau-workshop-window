@@ -19,7 +19,7 @@ interface Props {
   submittedAt?: string
 }
 
-function Row({ label, value }: { label: string; value?: string }) {
+function Row({ label, value }: { label: string; value?: string | undefined }) {
   if (!value) return null
   return (
     <Text style={row}>
@@ -72,7 +72,7 @@ const Email = (p: Props) => (
 
 export const template = {
   component: Email,
-  subject: (data: Record<string, any>) => `New open call application: ${data.organisation ?? 'Unknown'}`,
+  subject: (data: Record<string, any>) => `New open call application: ${data['organisation'] ?? 'Unknown'}`,
   displayName: 'Open call application notification',
   to: 'srichausiripong@gmail.com',
   previewData: {
