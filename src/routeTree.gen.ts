@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const ApplyRoute = ApplyRouteImport.update({
   path: '/apply',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -33,30 +39,40 @@ const LovableEmailTransactionalPreviewRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apply': typeof ApplyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apply': typeof ApplyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apply': typeof ApplyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/apply' | '/lovable/email/transactional/preview'
+  fullPaths:
+    '/' | '/apply' | '/sitemap.xml' | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/apply' | '/lovable/email/transactional/preview'
-  id: '__root__' | '/' | '/apply' | '/lovable/email/transactional/preview'
+  to: '/' | '/apply' | '/sitemap.xml' | '/lovable/email/transactional/preview'
+  id:
+    | '__root__'
+    | '/'
+    | '/apply'
+    | '/sitemap.xml'
+    | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApplyRoute: typeof ApplyRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -89,6 +112,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApplyRoute: ApplyRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
