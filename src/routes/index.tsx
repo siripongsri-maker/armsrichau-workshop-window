@@ -413,7 +413,8 @@ function Index() {
             <li><span className="en">Edit in CapCut</span><span className="th" lang="th">ตัดต่อใน CapCut</span></li>
           </ol>
           <p className="note en">The groups shared one camera vocabulary, including a rule of no high-angle shots of service users.</p>
-          <p className="note th" lang="th">ทุกกลุ่มใช้ภาษากล้องชุดเดียวกัน รวมถึงกติกาว่าจะไม่ถ่าย<span className="nw">ผู้รับบริการ</span>จากมุมสูง</p>
+          <p className="note th" lang="th">
+          </p>
         </div>
       </section>
 
