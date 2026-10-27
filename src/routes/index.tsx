@@ -196,7 +196,7 @@ function Index() {
           <article className="feature">
             <a className="shot shot-lg reveal-img" href="https://testd.website" target="_blank" rel="noopener">
               <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>testd.website</span></span>
-              <img src="img/shot-testd.webp" width="1456" height="829" loading="lazy" alt="testD home page: order a free HIV self-test kit" />
+              <img src="img/shot-testd.webp" width="1440" height="900" loading="lazy" alt="testD home page: order a free HIV self-test kit" />
             </a>
             <div className="feature-text">
               <h3 className="h-work">testD</h3>
@@ -233,7 +233,7 @@ function Index() {
             <article className="card-plain">
               <a className="shot reveal-img" href="https://swingrights.app" target="_blank" rel="noopener">
                 <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>swingrights.app</span></span>
-                <img src="img/shot-swingrights.webp" width="1400" height="797" loading="lazy" alt="SWING Rights home page: a safe space to report rights violations" />
+                <img src="img/shot-swingrights.webp" width="1440" height="900" loading="lazy" alt="SWING Rights home page: a safe space to report rights violations" />
               </a>
               <h3 className="h-work">SWING Rights</h3>
               <p className="en">A safe way for sex workers to report a rights violation and get help. No sign-up, no cost, a quick-exit button on every page, and reports by voice or text.</p>
@@ -244,7 +244,7 @@ function Index() {
             <article className="card-plain">
               <a className="shot reveal-img" href="https://swingacademy.life" target="_blank" rel="noopener">
                 <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>swingacademy.life</span></span>
-                <img src="img/shot-academy.webp" width="1400" height="797" loading="lazy" alt="SWING Academy home page: free bilingual courses" />
+                <img src="img/shot-academy.webp" width="1440" height="900" loading="lazy" alt="SWING Academy home page: free bilingual courses" />
               </a>
               <h3 className="h-work">SWING Academy</h3>
               <p className="en">Free bilingual courses on sexual health, rights and life skills. No ID card, no judgement, and anyone can check that a certificate is real.</p>
@@ -271,7 +271,7 @@ function Index() {
             <article className="made">
               <a className="shot reveal-img" href="https://cnsconnexts.lovable.app" target="_blank" rel="noopener">
                 <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>cnsconnexts.lovable.app</span></span>
-                <img src="img/shot-cnsconnext.webp" width="1440" height="900" loading="lazy" alt="คนส connext live screen: 50 people, 6 matches, and anonymous pairs by region" />
+                <img src="img/shot-cnsconnext.webp" width="1440" height="900" loading="lazy" alt="คนส connext on a phone: the Connecting Power home page, people to meet today, and the power map" />
               </a>
               <h3 className="h-work">คนส connext</h3>
               <p className="en">A mobile web app that matches participants at Thailand’s National Health Assembly by interests, needs and resources. A live big screen shows new connections without showing names.</p>
@@ -319,11 +319,11 @@ function Index() {
           <div className="mosaic">
             <a className="shot m-main reveal-img" href="https://testbkk.org" target="_blank" rel="noopener">
               <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>testbkk.org</span></span>
-              <img src="img/shot-testbkk.webp" width="1456" height="829" loading="lazy" alt="testBKK.org: media clips and clinic finder on a dark background" />
+              <img src="img/shot-testbkk.webp" width="1440" height="900" loading="lazy" alt="testBKK.org: media clips and clinic finder on a dark background" />
             </a>
-            <figure className="m-side reveal-img"><img src="img/shot-testmnl.webp" width="1000" height="569" loading="lazy" alt="testMNL.org home page, Manila" /><figcaption>testMNL · Manila</figcaption></figure>
-            <figure className="m-side reveal-img"><img src="img/shot-testjkt.webp" width="1000" height="569" loading="lazy" alt="testJKT.org home page, Jakarta" /><figcaption>testJKT · Jakarta</figcaption></figure>
-            <figure className="m-side reveal-img"><img src="img/shot-testbom.webp" width="1000" height="569" loading="lazy" alt="testBOM.org home page, Mumbai" /><figcaption>testBOM · Mumbai</figcaption></figure>
+            <figure className="m-side reveal-img"><img src="img/shot-testmnl.webp" width="1000" height="625" loading="lazy" alt="testMNL.org home page, Manila" /><figcaption>testMNL · Manila</figcaption></figure>
+            <figure className="m-side reveal-img"><img src="img/shot-testjkt.webp" width="1000" height="625" loading="lazy" alt="testJKT.org home page, Jakarta" /><figcaption>testJKT · Jakarta</figcaption></figure>
+            <figure className="m-side reveal-img"><img src="img/shot-testbom.webp" width="1000" height="625" loading="lazy" alt="testBOM.org home page, Mumbai" /><figcaption>testBOM · Mumbai</figcaption></figure>
           </div>
           <p className="cities"><span>testBKK</span><span>testJKT</span><span>testMNL</span><span>testSGN</span><span>testBOM</span><span>testVTE</span><span>test4UB</span></p>
           <dl className="stat-row">
