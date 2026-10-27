@@ -78,21 +78,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Siripong “Arm” Srichau" },
+      {
+        name: "description",
+        content: "Communication, digital innovation and partnerships for health and human rights.",
+      },
+      { name: "author", content: "Siripong Srichau" },
+      { property: "og:title", content: "Siripong “Arm” Srichau" },
+      {
+        property: "og:description",
+        content: "Communication, digital innovation and partnerships for health and human rights.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -103,7 +107,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // The portfolio's pre-paint script sets data-lang and classes on <html> before hydration.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

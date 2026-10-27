@@ -26,3 +26,15 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Where the portfolio lives
+
+| What | File |
+| --- | --- |
+| Page markup (EN + TH side by side) | `src/routes/index.tsx` |
+| Styles and colour tokens | `src/portfolio.css` |
+| Language switch, request dialog, open call, scroll motion | `src/lib/portfolio.ts` |
+| Photos and screenshots | `public/img/` |
+
+The November open call closes itself after the date in `data-deadline` on `#open-call`.
+To send "Apply" to a form instead of email, put the form URL in `data-form` on the same element.
