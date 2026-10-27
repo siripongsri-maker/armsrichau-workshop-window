@@ -68,8 +68,32 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
       return { ok: false, reason: "error" };
     }
 
-    // Owner notification email is wired once the sender domain is verified
-    // (Lovable email setup). Until then applications are stored only.
-    void row;
+    // Notify the owner. The application is already stored, so an email
+    // failure must not fail the submission — log and still return ok.
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      await sendTemplateEmail("open-call-notification", "srichausiripong@gmail.com", {
+        templateData: {
+          organisation: data.organisation,
+          link: data.link || undefined,
+          about: data.about,
+          workType: WORK_TYPE_LABELS[data.workType],
+          problem: data.problem,
+          oneMonthChange: data.oneMonthChange,
+          contactName: data.contactName,
+          email: data.email,
+          channel: CHANNEL_LABELS[data.channel],
+          channelDetail: data.channelDetail || undefined,
+          agreeTerms: data.agreeTerms === "yes" ? "Yes" : "No",
+          budget: BUDGET_LABELS[data.budget],
+          language: data.language,
+          submittedAt: new Date().toLocaleString("en-GB", { timeZone: "Asia/Bangkok" }),
+        },
+        idempotencyKey: `open-call-notification-${row.id}`,
+      });
+    } catch (emailError) {
+      console.error("open call notification email failed", emailError);
+    }
+
     return { ok: true };
   });
