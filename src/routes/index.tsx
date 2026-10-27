@@ -683,7 +683,7 @@ function Index() {
       </section>
 
       {/* Open call */}
-      <section className="call" id="open-call" aria-labelledby="call-h" data-deadline="2026-11-08T23:59:59+07:00" data-form="">
+      <section className="call" id="open-call" aria-labelledby="call-h" data-deadline="2026-11-08T23:59:59+07:00" data-form="/apply">
         <div className="wrap">
           <p className="call-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับ · พฤศจิกายน 2569</span></p>
           <h2 className="h-section" id="call-h"><span className="en">Three organisations this November. Pay what you can, from THB 0.</span><span className="th" lang="th">พฤศจิกายนนี้ รับทำงานให้ 3 องค์กร <span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></h2>

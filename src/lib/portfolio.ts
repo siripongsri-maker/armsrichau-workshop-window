@@ -157,11 +157,18 @@ export async function initPortfolio() {
     if (Date.now() > Date.parse(call.dataset.deadline)) root.classList.add('call-closed');
     const form = call.dataset.form;
     if (form) {
-      // When a Google Form link is set on the section, Apply goes straight to it.
+      // When a form link is set on the section, Apply goes straight to it.
+      // Same-site links ("/apply") open in the same tab; external links open a new tab.
+      const internal = form.startsWith('/');
       document.querySelectorAll('[data-request="apply"]').forEach((b) => {
         const a = document.createElement('a');
-        a.className = b.className; a.href = form; a.target = '_blank'; a.rel = 'noopener';
-        a.innerHTML = b.innerHTML + ' <span aria-hidden="true">↗</span>';
+        a.className = b.className; a.href = form;
+        if (internal) {
+          a.innerHTML = b.innerHTML;
+        } else {
+          a.target = '_blank'; a.rel = 'noopener';
+          a.innerHTML = b.innerHTML + ' <span aria-hidden="true">↗</span>';
+        }
         b.replaceWith(a);
       });
     }
