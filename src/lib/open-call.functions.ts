@@ -5,6 +5,25 @@ import { OPEN_CALL_DEADLINE, openCallSchema } from "./open-call-schema";
 
 const RATE_LIMIT_PER_HOUR = 5;
 
+const WORK_TYPE_LABELS: Record<string, string> = {
+  one_page_website: "One-page website (usually about THB 15,000)",
+  marketing_plan: "30-day marketing plan on one page (usually about THB 10,000)",
+  content_set: "Content set: 4 posts with captions (usually about THB 8,000)",
+};
+const CHANNEL_LABELS: Record<string, string> = {
+  email: "Email",
+  line: "LINE",
+  phone: "Phone",
+  messenger: "Facebook Messenger",
+  other: "Other",
+};
+const BUDGET_LABELS: Record<string, string> = {
+  "0": "THB 0",
+  up_to_2000: "Up to 2,000",
+  "2000_5000": "2,000–5,000",
+  over_5000: "Over 5,000",
+};
+
 export type SubmitResult =
   | { ok: true }
   | { ok: false; reason: "closed" | "rate_limited" | "invalid" | "error" };
