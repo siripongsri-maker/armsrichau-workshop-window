@@ -14,7 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      open_call_applications: {
+        Row: {
+          about: string
+          agree_terms: string
+          budget: string
+          channel: string
+          channel_detail: string | null
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          language: string
+          link: string | null
+          one_month_change: string
+          organisation: string
+          problem: string
+          work_type: string
+        }
+        Insert: {
+          about: string
+          agree_terms: string
+          budget: string
+          channel: string
+          channel_detail?: string | null
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          language?: string
+          link?: string | null
+          one_month_change: string
+          organisation: string
+          problem: string
+          work_type: string
+        }
+        Update: {
+          about?: string
+          agree_terms?: string
+          budget?: string
+          channel?: string
+          channel_detail?: string | null
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          language?: string
+          link?: string | null
+          one_month_change?: string
+          organisation?: string
+          problem?: string
+          work_type?: string
+        }
+        Relationships: []
+      }
+      open_call_rate_log: {
+        Row: {
+          created_at: string
+          id: number
+          ip: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          ip: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          ip?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
