@@ -5,6 +5,25 @@ import { OPEN_CALL_DEADLINE, openCallSchema } from "./open-call-schema";
 
 const RATE_LIMIT_PER_HOUR = 5;
 
+const WORK_TYPE_LABELS: Record<string, string> = {
+  one_page_website: "One-page website (usually about THB 15,000)",
+  marketing_plan: "30-day marketing plan on one page (usually about THB 10,000)",
+  content_set: "Content set: 4 posts with captions (usually about THB 8,000)",
+};
+const CHANNEL_LABELS: Record<string, string> = {
+  email: "Email",
+  line: "LINE",
+  phone: "Phone",
+  messenger: "Facebook Messenger",
+  other: "Other",
+};
+const BUDGET_LABELS: Record<string, string> = {
+  "0": "THB 0",
+  up_to_2000: "Up to 2,000",
+  "2000_5000": "2,000–5,000",
+  over_5000: "Over 5,000",
+};
+
 export type SubmitResult =
   | { ok: true }
   | { ok: false; reason: "closed" | "rate_limited" | "invalid" | "error" };
@@ -68,8 +87,32 @@ export const submitOpenCallApplication = createServerFn({ method: "POST" })
       return { ok: false, reason: "error" };
     }
 
-    // Owner notification email is wired once the sender domain is verified
-    // (Lovable email setup). Until then applications are stored only.
-    void row;
+    // Notify the owner. The application is already stored, so an email
+    // failure must not fail the submission — log and still return ok.
+    try {
+      const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+      await sendTemplateEmail("open-call-notification", "srichausiripong@gmail.com", {
+        templateData: {
+          organisation: data.organisation,
+          link: data.link || undefined,
+          about: data.about,
+          workType: WORK_TYPE_LABELS[data.workType],
+          problem: data.problem,
+          oneMonthChange: data.oneMonthChange,
+          contactName: data.contactName,
+          email: data.email,
+          channel: CHANNEL_LABELS[data.channel],
+          channelDetail: data.channelDetail || undefined,
+          agreeTerms: data.agreeTerms === "yes" ? "Yes" : "No",
+          budget: BUDGET_LABELS[data.budget],
+          language: data.language,
+          submittedAt: new Date().toLocaleString("en-GB", { timeZone: "Asia/Bangkok" }),
+        },
+        idempotencyKey: `open-call-notification-${row.id}`,
+      });
+    } catch (emailError) {
+      console.error("open call notification email failed", emailError);
+    }
+
     return { ok: true };
   });
