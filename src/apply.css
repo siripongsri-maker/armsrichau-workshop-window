@@ -76,8 +76,8 @@
 .f-option:hover { border-color: var(--ink-3); }
 .f-option:has(input:checked) { border-color: var(--accent); background: rgba(10, 111, 106, .06); }
 .f-option input { margin-top: 4px; accent-color: var(--accent); width: 18px; height: 18px; flex: none; }
-.f-option-title { font-weight: 600; line-height: 1.45; }
-.f-option-sub { font-size: 14px; color: var(--ink-2); margin-top: 2px; }
+.f-option-title { display: block; font-weight: 600; line-height: 1.45; }
+.f-option-sub { display: block; font-size: 14px; color: var(--ink-2); margin-top: 2px; }
 
 .f-row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
 @media (max-width: 640px) { .f-row { grid-template-columns: 1fr; } }
