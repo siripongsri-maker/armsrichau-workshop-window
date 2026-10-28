@@ -15,6 +15,13 @@
       "when": 1793072100677,
       "tag": "0001_harden_open_call_rate_slots",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793201924194,
+      "tag": "0002_ai_suggest_rate_limit",
+      "breakpoints": true
     }
   ]
 }
