@@ -11,3 +11,4 @@
 
 - The public-only /apply flow uses its shared schema and server function with a service-role-only atomic rate-reservation RPC; no global browser auth middleware is needed, keeping public submissions independent of localStorage.
 - Persist applications before attempting owner email; the installed TanStack server-function runtime exposes no supported waitUntil accessor, so await delivery with a four-second timeout and log failures without changing saved-application success. This bounds response latency without pretending the fallback is a durable queue.
+- Accounts: /auth, /reset-password and signed-in pages under src/routes/_authenticated/ use Cloud Auth; the /apply flow stays independent of sign-in so public applications never depend on a browser session.
