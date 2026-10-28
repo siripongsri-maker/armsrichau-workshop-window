@@ -8,6 +8,7 @@ import portfolioCss from "../portfolio.css?url";
 import applyCss from "../apply.css?url";
 import { openCallSchema, type OpenCallInput, type OpenCallData } from "../lib/open-call-schema";
 import { getOpenCallState, submitOpenCallApplication } from "../lib/open-call.functions";
+import { DraftHelper } from "../components/DraftHelper";
 
 const TITLE = "Apply — November open call · Arm Srichau";
 const DESCRIPTION =
@@ -118,6 +119,7 @@ function ApplyPage() {
     register,
     handleSubmit,
     watch,
+    setValue,
     setFocus,
     formState: { errors, isSubmitting },
   } = useForm<OpenCallInput, unknown, OpenCallData>({
@@ -310,6 +312,7 @@ function ApplyPage() {
                   {...register("about")}
                 />
                 <p className="f-count">{about.length}/600</p>
+                <DraftHelper field="about" text={about} lang={lang} onUse={(v) => setValue("about", v, { shouldValidate: true, shouldDirty: true })} />
                 <FieldError name="about" message={errors.about?.message} />
               </div>
 
@@ -405,6 +408,7 @@ function ApplyPage() {
                   {...register("problem")}
                 />
                 <p className="f-count">{problem.length}/600</p>
+                <DraftHelper field="problem" text={problem} lang={lang} onUse={(v) => setValue("problem", v, { shouldValidate: true, shouldDirty: true })} />
                 <FieldError name="problem" message={errors.problem?.message} />
               </div>
 
@@ -423,6 +427,7 @@ function ApplyPage() {
                   {...register("oneMonthChange")}
                 />
                 <p className="f-count">{oneMonthChange.length}/600</p>
+                <DraftHelper field="one_month_change" text={oneMonthChange} lang={lang} onUse={(v) => setValue("oneMonthChange", v, { shouldValidate: true, shouldDirty: true })} />
                 <FieldError name="oneMonthChange" message={errors.oneMonthChange?.message} />
               </div>
 
