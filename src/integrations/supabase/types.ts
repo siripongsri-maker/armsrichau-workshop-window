@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_suggest_log: {
+        Row: {
+          created_at: string
+          id: number
+          ip: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          ip: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          ip?: string
+        }
+        Relationships: []
+      }
       open_call_applications: {
         Row: {
           about: string
@@ -91,6 +109,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ai_suggest_take_slot: {
+        Args: { p_ip: string; p_limit?: number }
+        Returns: boolean
+      }
       open_call_take_slot: {
         Args: { p_ip: string; p_limit?: number }
         Returns: boolean
