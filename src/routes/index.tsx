@@ -247,8 +247,8 @@ function Index() {
           <div className="call-terms">
             <div>
               <h3 className="col-h"><span className="en">How it works</span><span className="th" lang="th">เงื่อนไขงาน</span></h3>
-              <ul className="ticks en"><li>Two rounds of revisions</li><li>Done in two weeks</li><li>Real costs such as domain, hosting or printing are paid by you</li></ul>
-              <ul className="ticks th" lang="th"><li>แก้ได้ 2 รอบ</li><li>เสร็จใน 2 สัปดาห์</li><li>ค่าใช้จ่ายจริงอย่างโดเมน โฮสติ้ง หรือค่าพิมพ์ เจ้าของงานออกเอง</li></ul>
+              <ul className="ticks en"><li>Two rounds of revisions</li><li>Done in two weeks</li><li>Real costs such as domain, hosting or printing are paid by you. I’ll tell you and estimate them first, and we agree before going ahead.</li></ul>
+              <ul className="ticks th" lang="th"><li>แก้ได้ 2 รอบ</li><li>เสร็จใน 2 สัปดาห์</li><li>ค่าใช้จ่ายจริง เช่น โดเมน โฮสติ้ง หรือค่าพิมพ์ เจ้าของงานออกเอง อาร์มจะแจ้งและประเมินให้ก่อน ตกลงกันแล้วค่อยทำต่อ</li></ul>
             </div>
             <div>
               <h3 className="col-h"><span className="en">What I ask in return</span><span className="th" lang="th">ที่ขอแลก</span></h3>
@@ -365,15 +365,15 @@ function Index() {
           </header>
           <div className="made-grid">
             <article className="made">
-              <a className="shot reveal-img" href="https://cnsconnexts.lovable.app" target="_blank" rel="noopener">
-                <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>cnsconnexts.lovable.app</span></span>
-                <img src="img/shot-cnsconnext.webp" width="1440" height="900" loading="lazy" alt="คนส connext on a phone: the Connecting Power home page, people to meet today, and the power map" />
+              <a className="shot reveal-img" href="https://cnsconnexts.org" target="_blank" rel="noopener">
+                <span className="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>cnsconnexts.org</span></span>
+                <img src="img/shot-cnsconnext.webp" width="1440" height="900" loading="lazy" alt="คนส connext on three phones: a match card with the participant’s name blurred, a map of 158 participants across Thailand, and the project list" />
               </a>
               <h3 className="h-work">คนส connext</h3>
               <p className="en">A mobile web app that matches participants at Thailand’s National Health Assembly by interests, needs and resources. A live big screen shows new connections without showing names.</p>
               <p className="th" lang="th">เว็บแอปบนมือถือ จับคู่ผู้เข้าร่วม<span className="nw">สมัชชาสุขภาพแห่งชาติ</span>จากความสนใจ สิ่งที่มี และสิ่งที่ต้องการ พร้อมจอใหญ่แสดงคู่ที่เชื่อมกันแบบไม่เปิดเผยชื่อ</p>
               <p className="role"><b className="en">My part</b><b className="th" lang="th">บทบาท</b> <span className="en">Product design and build</span><span className="th" lang="th">ออกแบบและสร้างระบบ</span></p>
-              <a className="link" href="https://cnsconnexts.lovable.app" target="_blank" rel="noopener">cnsconnexts.lovable.app <span aria-hidden="true">↗</span></a>
+              <a className="link" href="https://cnsconnexts.org" target="_blank" rel="noopener">cnsconnexts.org <span aria-hidden="true">↗</span></a>
             </article>
             <article className="made">
               <a className="shot reveal-img" href="https://cherryleeandco.com" target="_blank" rel="noopener">
@@ -413,6 +413,24 @@ function Index() {
           <p className="inline-facts en">A redesign guided by GA4 data <b>more than doubled</b> time on testBKK.org and lifted HIV test bookings through the site by <b>25%</b>. Brand and influencer partners took reach past <b>5.5 million</b> people, on an outreach budget of <b>THB 30 million</b> managed with finance and programme teams.</p>
           <p className="inline-facts th" lang="th">การปรับเว็บตามข้อมูล GA4 ทำให้คนอยู่บน testBKK.org <b>นานขึ้นกว่าเท่าตัว</b> และจองตรวจ<span className="nw">เอชไอวี</span>ผ่านเว็บเพิ่มขึ้น <b>25%</b> แคมเปญร่วมกับแบรนด์และ<span className="nw">อินฟลูเอนเซอร์</span>เข้าถึงคนกว่า <b>5.5 ล้านคน</b> ด้วยงบงานเข้าถึง <b>30 ล้านบาท</b> ที่บริหารร่วมกับทีมการเงินและทีมโครงการ</p>
           <p className="award-note"><span className="en">testBKK received the Ardhanareeswara Award for community media (2025).</span><span className="th" lang="th">testBKK ได้รับรางวัล<span className="nw">อรรธนารีศวร</span> ด้านสื่อชุมชน (2568)</span></p>
+
+          <h3 className="h-sub"><span className="en">Off the screen: testBKK in the community</span><span className="th" lang="th">นอกจอ: testBKK ในชุมชน</span></h3>
+          <div className="drives">
+            <article className="drive">
+              <figure className="drive-img reveal-img"><img src="img/campaign-safeplay.webp" width="756" height="504" loading="lazy" alt="A Safe Play Pack laid out on a bed: condoms, water-based lubricant and testBKK drawstring bags" /></figure>
+              <h3 className="h-work">Safe Play Pack</h3>
+              <p className="en">Free condoms and lubricant, ordered on LINE and sent by post, with a nudge to get tested. Sponsored by Durex, Zen Onsen and Bond. Explainers in Thai gay slang brought in younger men; one, “Sides”, was read more than 10,000 times.</p>
+              <p className="th" lang="th">ถุงยางและเจลหล่อลื่นฟรี สั่งผ่าน LINE ส่งถึงบ้าน พร้อมชวนไปตรวจ สนับสนุนโดย Durex, Zen Onsen และ Bond บทความที่ใช้ศัพท์สแลงเกย์ช่วยดึงคนรุ่นใหม่เข้ามา เรื่อง “Sides” มีคนอ่านกว่า 10,000 ครั้ง</p>
+              <p className="drive-n"><b>3,000+</b> <span className="en">packs sent · 2023</span><span className="th" lang="th">ชุดที่ส่งออกไป · 2566</span></p>
+            </article>
+            <article className="drive">
+              <figure className="drive-img reveal-img"><img src="img/campaign-prep-petition.webp" width="864" height="576" loading="lazy" alt="Campaigners with a Pride flag and a banner showing 5,611 petition signatures, at the hand-over" /></figure>
+              <h3 className="h-work">#PrEPต้องเข้าถึงได้</h3>
+              <p className="en">In January 2023 a ministry order stopped community clinics from giving out PrEP and PEP. testBKK and partners ran a Change.org petition, and one post about it was seen 3.1 million times.</p>
+              <p className="th" lang="th">มกราคม 2566 มีประกาศกระทรวงไม่ให้หน่วยบริการที่ไม่ใช่โรงพยาบาลจ่าย PrEP และ PEP testBKK กับภาคีจึงทำแคมเปญล่ารายชื่อบน Change.org โพสต์ชวนลงชื่อมีคนเห็น 3.1 ล้านครั้ง</p>
+              <p className="drive-n"><b>5,611</b> <span className="en">signatures handed over to the minister</span><span className="th" lang="th">รายชื่อที่ยื่นถึงรัฐมนตรี</span></p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -549,6 +567,15 @@ function Index() {
               </div>
             </li>
             <li>
+              <p className="t-when">2023</p>
+              <div className="t-body">
+                <h3>Communications Officer, HTAsiaLink</h3>
+                <p className="t-org">HITAP</p>
+                <p className="en">Turned health technology assessment research into plain-language briefs, visual stories and event summaries, and led content for the HTAsiaLink 2023 conference.</p>
+                <p className="th" lang="th">แปลงงานวิจัยการประเมินเทคโนโลยีด้านสุขภาพให้เป็นบทสรุปนโยบาย เรื่องเล่าด้วยภาพ และสรุปงานประชุมที่อ่านง่าย และดูแลคอนเทนต์ของงานประชุม HTAsiaLink 2023</p>
+              </div>
+            </li>
+            <li>
               <p className="t-when">2021–2024</p>
               <div className="t-body">
                 <h3>Digital Key Population Engagement Officer</h3>
@@ -562,8 +589,8 @@ function Index() {
               <div className="t-body">
                 <h3>Head of Academic</h3>
                 <p className="t-org">Learning Ability Promotion Center</p>
-                <p className="en">Prepared 1,000+ teachers for an updated curriculum and introduced blended-learning labs that raised engagement and English scores by 18%.</p>
-                <p className="th" lang="th">เตรียมครูกว่า 1,000 คนให้พร้อมใช้หลักสูตรใหม่ และริเริ่มห้องเรียนแบบผสมผสานที่ทำให้ความมีส่วนร่วมและคะแนน<span className="nw">ภาษาอังกฤษ</span>เพิ่มขึ้น 18%</p>
+                <p className="en">Prepared 1,000+ teachers for an updated curriculum and introduced blended-learning labs that raised engagement and English scores by 18%. During COVID-19 lockdowns, wrote and produced “Kindermusic at Home”, music video lessons used by 200+ families.</p>
+                <p className="th" lang="th">เตรียมครูกว่า 1,000 คนให้พร้อมใช้หลักสูตรใหม่ และริเริ่มห้องเรียนแบบผสมผสานที่ทำให้ความมีส่วนร่วมและคะแนน<span className="nw">ภาษาอังกฤษ</span>เพิ่มขึ้น 18% ช่วงล็อกดาวน์โควิด-19 เขียนบทและผลิต “Kindermusic at Home” บทเรียนดนตรีผ่าน<span className="nw">วิดีโอ</span>ที่ครอบครัวกว่า 200 ครอบครัวได้ใช้</p>
               </div>
             </li>
             <li>
@@ -624,6 +651,8 @@ function Index() {
             <figure className="reveal-img"><img src="img/moment-aids2026-poster.webp" width="1200" height="1536" loading="lazy" alt="Arm standing next to the testD poster at AIDS 2026" /><figcaption><span className="en">With the testD poster at AIDS 2026.</span><span className="th" lang="th">กับโปสเตอร์ testD ในเวที AIDS 2026</span></figcaption></figure>
             <figure className="reveal-img"><img src="img/moment-forum.webp" width="1200" height="900" loading="lazy" alt="Arm holding a microphone at SWING's public forum on sex workers' voices" /><figcaption><span className="en">Hosting SWING’s public forum on sex workers’ voices.</span><span className="th" lang="th">ดำเนินรายการเวทีสาธารณะของ SWING เรื่องเสียงของ<span className="nw">พนักงานบริการ</span></span></figcaption></figure>
             <figure className="reveal-img"><img src="img/moment-aids2026-team.webp" width="1080" height="720" loading="lazy" alt="The SWING team with partners at AIDS 2026" /><figcaption><span className="en">The SWING team and partners at AIDS 2026.</span><span className="th" lang="th">ทีม SWING และเพื่อนร่วมงานใน AIDS 2026</span></figcaption></figure>
+            <figure className="reveal-img"><img src="img/moment-apfsd.webp" width="1008" height="1008" loading="lazy" alt="Arm speaking on a panel at the 12th APFSD, with Arm’s speaker profile on the screen behind" /><figcaption><span className="en">On a panel at the 12th Asia-Pacific Forum on Sustainable Development, Bangkok 2025.</span><span className="th" lang="th">ร่วมเวทีเสวนา Asia-Pacific Forum on Sustainable Development ครั้งที่ 12 กรุงเทพฯ 2568</span></figcaption></figure>
+            <figure className="reveal-img"><img src="img/moment-safeplay-launch.webp" width="888" height="666" loading="lazy" alt="Arm holding a Safe Play Pack between two performers at a testBKK party" /><figcaption><span className="en">Launching Safe Play Pack at a testBKK party night.</span><span className="th" lang="th">เปิดตัว Safe Play Pack ในปาร์ตี้ของ testBKK</span></figcaption></figure>
             <figure className="reveal-img"><img src="img/moment-australia-awards.webp" width="1400" height="733" loading="lazy" alt="Australia Awards fellows around a workshop table" /><figcaption><span className="en">Australia Awards fellows working on community-led health services.</span><span className="th" lang="th">กับเพื่อนทุน Australia Awards เรื่องบริการสุขภาพที่ชุมชนนำ</span></figcaption></figure>
           </div>
 
@@ -632,6 +661,8 @@ function Index() {
               <h3 className="col-h"><span className="en">Speaking</span><span className="th" lang="th">การบรรยาย</span></h3>
               <ul className="list">
                 <li>Speaker, AIDS Concern Conference, Hong Kong <span className="yr">2024</span></li>
+                <li>Panellist, 12th Asia-Pacific Forum on Sustainable Development (UN ESCAP), Bangkok <span className="yr">2025</span></li>
+                <li>Community voice, WHO Strategic and Technical Advisory Group on HIV, Hepatitis and STIs</li>
                 <li>Presenter, IPPF Sex Work Consortium, Rio de Janeiro <span className="yr">2026</span></li>
                 <li>Speaker, SWC Communications Learning Series <span className="yr">2026</span></li>
                 <li><a href="https://plus.iasociety.org/e-posters/ias-educational-fund-thailand-4-november-2025-meeting-report-and-recommendations" target="_blank" rel="noopener">Panellist, IAS Educational Fund, Bangkok ↗</a> <span className="yr">2025</span></li>

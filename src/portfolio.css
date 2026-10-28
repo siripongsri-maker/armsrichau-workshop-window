@@ -531,13 +531,13 @@ html[data-lang="th"] .contact-h { line-height: 1.2; letter-spacing: -.01em; }
 
 /* ---------- Moments gallery ---------- */
 .h-sub-first { margin-top: 0; }
-.moments { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); margin: 24px 0 clamp(56px, 7vw, 96px); }
+.moments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); margin: 24px 0 clamp(56px, 7vw, 96px); }
 .moments figure { overflow: hidden; }
 .moments img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius); }
 .moments figcaption { margin-top: 8px; }
 .list a { text-decoration: none; }
 .list a:hover { color: var(--accent); text-decoration: underline; }
-@media (max-width: 860px) { .moments { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1080px) { .moments { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* ---------- Open call ---------- */
 .call-card {
@@ -618,3 +618,12 @@ html[data-lang="th"] .call-card-h { line-height: 1.35; letter-spacing: 0; }
 .offers li { grid-column: span 2; }
 .offers li:nth-child(n + 4) { grid-column: span 3; }
 @media (max-width: 860px) { .offers li, .offers li:nth-child(n + 4) { grid-column: 1 / -1; } }
+
+/* ---------- testBKK off the screen ---------- */
+.drives { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); margin-top: 24px; }
+.drive-img { overflow: hidden; border-radius: var(--radius); margin-bottom: 20px; }
+.drive-img img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.drive > p.en, .drive > p.th { margin-top: 8px; color: var(--ink-2); max-width: 52ch; }
+.drive-n { margin-top: 16px; font-size: 15px; color: var(--ink-2); }
+.drive-n b { font: 700 clamp(26px, 2.6vw, 34px)/1 var(--f-display); color: var(--ink); letter-spacing: -.02em; margin-right: 6px; }
+@media (max-width: 860px) { .drives { grid-template-columns: minmax(0, 1fr); } }
