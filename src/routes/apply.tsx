@@ -12,7 +12,7 @@ import { DraftHelper } from "../components/DraftHelper";
 
 const TITLE = "Apply — November open call · Arm Srichau";
 const DESCRIPTION =
-  "Apply for the November open call: three organisations, pay what you can, from THB 0. Applications close 8 November.";
+  "Apply for the November open call: three organisations, free, no service fee. Applications close 8 November.";
 
 // Same pre-paint language pick as the home page.
 const PRE_PAINT = `(function () {
@@ -214,11 +214,11 @@ function ApplyPage() {
               <span className="th" lang="th">สมัครรอบพฤศจิกายน</span>
             </h1>
             <p className="lede en">
-              Three organisations, pay what you can, from THB 0. Apply by 8 November; the three picked will hear back
-              by 15 November.
+              Three organisations, free, no service fee. Apply by 8 November; the three picked will hear back by
+              15 November.
             </p>
             <p className="lede th" lang="th">
-              รับทำงานให้ 3 องค์กร จ่ายตามกำลัง เริ่มที่ 0 บาท สมัครภายใน 8 พฤศจิกายน เลือก 3 ที่และติดต่อกลับภายใน
+              รับทำงานให้ 3 องค์กร ฟรี ไม่คิดค่าบริการ สมัครภายใน 8 พฤศจิกายน เลือก 3 ที่และติดต่อกลับภายใน
               15 พฤศจิกายน
             </p>
           </div>
@@ -534,14 +534,14 @@ function ApplyPage() {
               {/* 8. Budget */}
               <fieldset className="f-field" style={{ border: 0, padding: 0, margin: 0 }}>
                 <legend className="f-label" style={{ padding: 0 }}>
-                  <span className="en">If you can pay, roughly how much?</span>
-                  <span className="th" lang="th">ถ้าจ่ายได้ ประมาณเท่าไร</span>
+                  <span className="en">Would you like to chip in? THB 0 is fine and won’t affect selection.</span>
+                  <span className="th" lang="th">อยากสนับสนุนค่าแรงไหม เลือก 0 บาทได้เลย ไม่มีผลต่อการคัดเลือก</span>
                   <span className="f-req" aria-hidden="true">*</span>
                 </legend>
                 <div className="f-options">
                   <label className="f-option">
                     <input type="radio" value="0" {...fieldA11y("budget")} {...register("budget")} />
-                    <span className="f-option-title"><span className="en">THB 0</span><span className="th" lang="th">ไม่เสียค่าใช้จ่าย 0 บาท</span></span>
+                    <span className="f-option-title"><span className="en">THB 0</span><span className="th" lang="th">0 บาท</span></span>
                   </label>
                   <label className="f-option">
                     <input type="radio" value="up_to_2000" {...fieldA11y("budget")} {...register("budget")} />

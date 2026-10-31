@@ -156,7 +156,7 @@ function Index() {
             </button>
             <div className="call-card">
               <p className="call-card-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับงาน · พฤศจิกายน 2569</span></p>
-              <p className="call-card-h"><span className="en">Pay what you can, from <span className="nw">THB 0</span></span><span className="th" lang="th"><span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></p>
+              <p className="call-card-h"><span className="en">Free, <span className="nw">no service fee</span></span><span className="th" lang="th"><span className="nw">ฟรี</span> <span className="nw">ไม่คิดค่าบริการ</span></span></p>
               <p className="call-card-p"><span className="en">For 3 organisations: a website, marketing plan, content, proposal or consultancy.</span><span className="th" lang="th">สำหรับ 3 องค์กร: เว็บไซต์ แผนการตลาด <span className="nw">คอนเทนต์</span> ข้อเสนอโครงการ หรือที่ปรึกษา</span></p>
               <div className="call-card-foot">
                 <button className="btn btn-accent" type="button" data-request="apply"><span className="en">Apply now</span><span className="th" lang="th">สมัครเลย</span></button>
@@ -209,7 +209,7 @@ function Index() {
       <section className="call" id="open-call" aria-labelledby="call-h" data-deadline="2026-11-08T23:59:59+07:00" data-form="/apply">
         <div className="wrap">
           <p className="call-k"><span className="call-dot" aria-hidden="true"></span><span className="en">Open call · November 2026</span><span className="th" lang="th">เปิดรับ · พฤศจิกายน 2569</span></p>
-          <h2 className="h-section" id="call-h"><span className="en">Three organisations this November. Pay what you can, from THB 0.</span><span className="th" lang="th">พฤศจิกายนนี้ รับทำงานให้ 3 องค์กร <span className="nw">จ่ายตามกำลัง</span> <span className="nw">เริ่มที่ 0 บาท</span></span></h2>
+          <h2 className="h-section" id="call-h"><span className="en">Three organisations this November. Free, no service fee.</span><span className="th" lang="th">พฤศจิกายนนี้ รับทำงานให้ 3 องค์กร <span className="nw">ฟรี</span> <span className="nw">ไม่คิดค่าบริการ</span></span></h2>
           <p className="lede en">Ten-plus years of communication work for social-sector organisations, from health campaigns like testBKK with APCOM to rights work and online media. This round is a chance to build work with new groups.</p>
           <p className="lede th" lang="th">ทำงานสื่อสารให้องค์กรภาคสังคมมาสิบกว่าปี ทั้งแคมเปญสุขภาพ งานสิทธิ และสื่อออนไลน์ เคยทำแคมเปญ testBKK กับ APCOM ช่วงนี้อยากเก็บผลงานกับคนกลุ่มใหม่ ๆ บ้าง เลยเปิดรอบนี้ขึ้นมา</p>
 
